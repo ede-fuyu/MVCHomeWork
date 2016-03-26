@@ -51,7 +51,7 @@ namespace MVCHomeWork.Areas.作業一.Controllers
 
         public ActionResult QueryBankList (int id)
         {
-            var data = db.客戶銀行資訊.Where(p => p.客戶Id == id);
+            var data = db.客戶銀行資訊.Where(p => p.客戶Id == id && p.是否已刪除 == false);
             ViewBag.id = id;
             return PartialView(data);
         }
@@ -132,7 +132,7 @@ namespace MVCHomeWork.Areas.作業一.Controllers
                     data.是否已刪除 = true;
                     db.Entry(data).State = EntityState.Modified;
                     db.SaveChanges();
-                    return Json(new { isValid = true, message = HttpUtility.HtmlEncode("客戶銀行資訊刪除成功。") });
+                    return Json(new { isValid = true, id = data.客戶Id, message = HttpUtility.HtmlEncode("客戶銀行資訊刪除成功。") });
                 }
                 catch (Exception ex)
                 {
