@@ -137,6 +137,9 @@
                                 if (data.isValid) {
                                     loadDataList($('#formQuery').MVCModelSerialize());
                                     $("#modalView").modal("hide");
+                                    if ($("#modalBankListView").attr("data-clientid") == "@Model.客戶Id") {
+                                        loadBankInfo('@Model.客戶Id');
+                                    }
                                 } else {
                                     $.unblockUI();
                                 }

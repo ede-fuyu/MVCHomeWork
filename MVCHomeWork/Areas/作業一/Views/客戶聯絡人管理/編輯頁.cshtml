@@ -18,9 +18,16 @@
                             @if (Model.客戶Id != 0)
                             {
                                 <li class="li-xlarge">
-                                    @Html.LabelFor(p => p.客戶資料.客戶名稱)
-                                    @Html.DisplayFor(p => p.客戶資料.客戶名稱)
                                     <input id="客戶Id" type="hidden" value="@Model.客戶Id" name="客戶Id">
+                                    @Html.LabelFor(p => p.客戶資料.客戶名稱)
+                                    @if (Model.Id == 0)
+                                    {
+                                        @ViewBag.Client
+                                    }
+                                    else
+                                    {
+                                        @Html.DisplayFor(p => p.客戶資料.客戶名稱)
+                                    }
                                 </li>
                             }
                             else
@@ -124,6 +131,9 @@
                                 if (data.isValid) {
                                     loadDataList($('#formQuery').MVCModelSerialize());
                                     $("#modalView").modal("hide");
+                                    if ($("#modalContactPersonListView").attr("data-clientid") == "@Model.客戶Id") {
+                                        loadContactPersonInfo('@Model.客戶Id');
+                                    }
                                 } else {
                                     $.unblockUI();
                                 }
