@@ -37,7 +37,6 @@ namespace MVCHomeWork.Areas.作業一.Controllers
             {
                 data = data.Where(p => p.a.姓名.Contains(model.聯絡人姓名));
             }
-
             return PartialView("客戶聯絡人資料清單", data.Select(p => p.a).ToList());
         }
 
