@@ -33,7 +33,7 @@ namespace MVCHomeWork.Areas.作業一.Models
         public string 地址 { get; set; }
         
         [StringLength(250, ErrorMessage="欄位長度不得大於 250 個字元")]
-        [RegularExpression(@"/^[a-z]([a-z0-9]*[-_]?[a-z0-9]+)*@([a-z0-9]*[-_]?[a-z0-9]+)+[\.][a-z]{2,3}([\.][a-z]{2})?$/i", ErrorMessage = "Email格式輸入錯誤")]
+        [EmailAddress(ErrorMessage = "Email格式輸入錯誤")]
         public string Email { get; set; }
         [Required]
         public bool 是否已刪除 { get; set; }
