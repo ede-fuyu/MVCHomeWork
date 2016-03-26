@@ -1,0 +1,16 @@
+﻿@model IEnumerable<MVCHomeWork.Areas.作業一.Models.客戶銀行資訊>
+
+<div class="modal-dialog"  style="width: 1150px;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title">客戶銀行帳戶資料清單</h4>
+        </div>
+        <div class="modal-body">
+            @Html.Partial("客戶銀行帳戶資料清單", Model);
+        </div>
+        <div class="modal-footer">
+            <button id="btnCreateClient" type="button" class="btn btn-primary" onclick="loadEditBankInfo('@ViewBag.id', 0, '@Url.Action("Edit", "客戶銀行帳戶管理")');">新增</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="$('.formError').remove();">關閉</button>
+        </div>
+    </div>
+</div>

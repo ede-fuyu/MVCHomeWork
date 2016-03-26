@@ -1,0 +1,151 @@
+﻿@using MVCHomeWork.Areas.作業一.Models
+@model int
+
+@Html.Partial("查詢頁", new QueryModel());
+<div id="modalView" class="modal fade" tabindex="-1" role="dialog"></div>
+<div id="modalBankListView" class="modal fade" tabindex="-1" role="dialog"></div>
+<div id="modalContactPersonListView" class="modal fade" tabindex="-1" role="dialog"></div>
+
+<script type="text/javascript">
+    function loadDataList(model) {
+        @if(Model == 1)
+        {<text>
+        var title = "客戶清單";
+        var url = "@Url.Action("QueryList", "客戶資料管理")";
+        </text>}
+        else
+        {<text>
+        var title = "客戶資料清單";
+        var url = "@Url.Action("QueryDataList", "客戶資料管理")";
+        </text>}
+        BlockUIWindow("..." + title + "載入中...");
+        $("#ClientListView").load(url, { model: model }, function () {
+            $("#listTitle").html(title);
+            $('#ClientList').show();
+            $.unblockUI();
+        });
+    }
+
+    function loadEdit(id, url) {
+        if (id === 0) {
+            BlockUIWindow("...新增客戶資料頁面載入中...");
+        } else if (url.indexOf("Detail")) {
+            BlockUIWindow("...客戶資料頁面載入中...");
+        } else {
+            BlockUIWindow("...編輯客戶資料頁面載入中...");
+        }
+        $("#modalView").load(url, { id: id }, function () {
+            $("#modalView").modal("show");
+            $.unblockUI();
+        });
+    }
+
+    function delCompanyData(id, text) {
+        if (confirm('是否要刪除' + text + '的資料?')) {
+            BlockUIWindow("...客戶資料刪除中...");
+            $.ajax({
+                url: "@Url.Action("Delete", "客戶資料管理")",
+                type: 'POST',
+                data: { id: id },
+                success: function (data) {
+                    alert(data.message);
+                    if (data.isValid) {
+                        loadDataList($('#formQuery').MVCModelSerialize());
+                    }
+                    $.unblockUI();
+                }
+            });
+        }
+    }
+
+    @if(Model == 1)
+    {<text>
+    function loadEditBankInfo(id, dataid, url) {
+        if (dataid === 0) {
+            BlockUIWindow("...新增客戶銀行帳戶資料頁面載入中...");
+        } else if (url.indexOf("Detail")) {
+            BlockUIWindow("...客戶銀行帳戶資料頁面載入中...");
+        } else {
+            BlockUIWindow("...編輯客戶銀行帳戶資料頁面載入中...");
+        }
+        $("#modalView").load(url, { id: id, dataid: dataid }, function () {
+            $("#modalView").modal("show");
+            $("#modalBankListView").modal("hide");
+            $.unblockUI();
+        });
+    }
+
+    function delBankData(id, text) {
+        if (confirm('是否要刪除' + text + '的資料?')) {
+            BlockUIWindow("..." + text + "資料刪除中...");
+            $.ajax({
+                url: "@Url.Action("Delete", "客戶銀行帳戶管理")",
+                type: 'POST',
+                data: { id: id },
+                success: function (data) {
+                    alert(data.message);
+                    if (data.isValid) {
+                        $("#modalView").modal("hide");
+                        loadDataList($('#formQuery').MVCModelSerialize());
+                        loadBankInfo(data.id);
+                    }
+                    $.unblockUI();
+                }
+            });
+        }
+    }
+
+    function loadBankInfo(id) {
+        BlockUIWindow("...客戶銀行帳戶資料清單載入中...");
+        $("#modalBankListView").attr("data-clientid", id);
+        $("#modalBankListView").load("@Url.Action("QueryBankList", "客戶銀行帳戶管理")", { id: id }, function () {
+            $('#modalBankListView').modal("show");
+            $.unblockUI();
+        });
+    }
+
+    function loadEditContactPersonInfo(id, dataid, url) {
+        if (dataid === 0) {
+            BlockUIWindow("...新增客戶聯絡人資料頁面載入中...");
+        } else if (url.indexOf("Detail")) {
+            BlockUIWindow("...客戶聯絡人資料頁面載入中...");
+        } else {
+            BlockUIWindow("...編輯客戶聯絡人資料頁面載入中...");
+        }
+        $("#modalView").load(url, { id: id, dataid: dataid }, function () {
+            $("#modalView").modal("show");
+            $("#modalContactPersonListView").modal("hide");
+            $.unblockUI();
+        });
+    }
+
+    function delContactPerson(id, text) {
+        if (confirm('是否要刪除聯絡人' + text + '的資料?')) {
+            BlockUIWindow("...聯絡人" + text + "資料刪除中...");
+            $.ajax({
+                url: "@Url.Action("Delete", "客戶聯絡人管理")",
+                type: 'POST',
+                data: { id: id },
+                success: function (data) {
+                    alert(data.message);
+                    if (data.isValid) {
+                        $("#modalView").modal("hide");
+                        loadDataList($('#formQuery').MVCModelSerialize());
+                        loadContactPersonInfo(data.id);
+                    }
+                    $.unblockUI();
+                }
+            });
+        }
+    }
+
+    function loadContactPersonInfo(id) {
+        BlockUIWindow("...客戶聯絡人清單載入中...");
+        $("#modalContactPersonListView").attr("data-clientid", id);
+        $("#modalContactPersonListView").load("@Url.Action("QueryContactPersonList", "客戶聯絡人管理")", { id: id }, function () {
+            $('#modalContactPersonListView').modal("show");
+            $.unblockUI();
+        });
+    }
+    </text>}
+</script>

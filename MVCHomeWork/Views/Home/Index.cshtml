@@ -1,0 +1,88 @@
+﻿<div class="row" style="margin-top: 10px;">
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">專案附加套件</a></li>
+        <li role="presentation"><a href="#homework1" aria-controls="profile" role="tab" data-toggle="tab">作業一</a></li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="home">
+            <ul class="inline">
+                <li class="col-md-12">
+                    ASP.NET MVC Inline Validation Plugin 1.0.0
+                </li>
+                <li class="col-md-12">
+                    bootstrap-select v1.5.4
+                </li>
+                <li class="col-md-12">
+                    jQuery.BlockUI 2.70.0
+                </li>
+                <li class="col-md-12">
+                    自訂CSS ~/Content/Custom/site.css
+                </li>
+            </ul>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="homework1">
+            <ul class="inline">
+                <li class="col-md-12">
+                    <h4 style="font-weight:bold">花費時間: 約14小時</h4>
+                </li>
+                <li class="col-md-12">
+                    <h4 style="font-weight:bold">遇到的問題:</h4>
+                    <ul class="inline">
+                        <li class="col-md-12">
+                            <p>1.　HTMLHelper 遇到中文欄位名稱 建出來的HTML不會有ID</p>
+                            <p>　　所以使用ASP.NET MVC Inline Validation Plugin做前端驗證時，jQuery會發生錯誤</p>
+                            <p>　　錯誤訊息: </p>
+                            <p style="color:red;">　　Error: Syntax error, unrecognized expression: div.</p>
+                            <p>　　　　　throw new Error( "Syntax error, unrecognized expression: " + msg );</p>
+                            <p>　　花了約4小時才找到原因</p>
+                        </li>
+                        <li class="col-md-12">
+                            <p>2.　使用 HiddenFor時。如下(其他的Helper不確定是不是也有這個問題)</p>
+                            <p>　　@@Html.HiddenFor(p => p.Id)</p>
+                            <p>　　@@Html.HiddenFor(p => p.客戶Id)</p>
+                            <p>　　客戶Id這個欄位會被認為是Id欄位，似乎是中文被Trim掉</p>
+                            <p>　　導至產出來的HEML Value會相同</p>
+                            <p>　　花了約2小時，最後放棄使用@@Html.HiddenFor與@@Html.Hidden</p>
+                            <p>　　直接寫HEML</p>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+@*@{
+        ViewBag.Title = "Home Page";
+    }
+
+    <div class="jumbotron">
+        <h1>ASP.NET</h1>
+        <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
+        <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <h2>Getting started</h2>
+            <p>
+                ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
+                enables a clean separation of concerns and gives you full control over markup
+                for enjoyable, agile development.
+            </p>
+            <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+        </div>
+        <div class="col-md-4">
+            <h2>Get more libraries</h2>
+            <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
+            <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+        </div>
+        <div class="col-md-4">
+            <h2>Web Hosting</h2>
+            <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
+            <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+        </div>
+    </div>*@
