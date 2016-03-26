@@ -25,6 +25,16 @@
         <div role="tabpanel" class="tab-pane" id="homework1">
             <ul class="inline">
                 <li class="col-md-12">
+                    <h4 style="font-weight:bold">建立清單的SQL</h4>
+                    <p>CREATE VIEW 清單 AS</p>
+                    <p>select a.Id, a.統一編號, a.客戶名稱, COUNT(Distinct b.Id) as 銀行帳戶數量, COUNT(Distinct c.Id) as 聯絡人數量</p>
+                    <p>from 客戶資料 a</p>
+                    <p>left join 客戶銀行資訊 b on a.Id = b.客戶Id and b.是否已刪除 = 0</p>
+                    <p>left join 客戶聯絡人 c on a.Id = c.客戶Id and c.是否已刪除 = 0</p>
+                    <p>where a.是否已刪除 = 0</p>
+                    <p>group by a.Id, a.統一編號, a.客戶名稱</p>
+                </li>
+                <li class="col-md-12">
                     <h4 style="font-weight:bold">花費時間: 約14小時</h4>
                 </li>
                 <li class="col-md-12">
