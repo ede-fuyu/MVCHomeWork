@@ -169,8 +169,8 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
-    <Compile Include="Areas\HomeWork\Controllers\CompanyController.cs" />
     <Compile Include="Areas\HomeWork\Controllers\BankInfoController.cs" />
+    <Compile Include="Areas\HomeWork\Controllers\CompanyController.cs" />
     <Compile Include="Areas\HomeWork\Controllers\ContactController.cs" />
     <Compile Include="Areas\HomeWork\HomeWorkAreaRegistration.cs" />
     <Compile Include="Areas\HomeWork\Models\BankInfo.cs">
@@ -315,7 +315,6 @@
       <DependentUpon>CustomerModel.edmx</DependentUpon>
     </Content>
     <Content Include="Areas\HomeWork\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\HomeWork\Views\Company\Index.cshtml" />
     <Content Include="Areas\HomeWork\Views\Company\Query.cshtml" />
     <Content Include="Areas\HomeWork\Views\Company\QueryList.cshtml" />
     <Content Include="Areas\HomeWork\Views\Company\QueryDataList.cshtml" />
@@ -328,6 +327,7 @@
     <Content Include="Areas\HomeWork\Views\Contact\QueryList.cshtml" />
     <Content Include="Areas\HomeWork\Views\Contact\Query.cshtml" />
     <Content Include="Areas\HomeWork\Views\Contact\Edit.cshtml" />
+    <Content Include="Areas\HomeWork\Views\Company\Index.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
