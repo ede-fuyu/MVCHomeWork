@@ -23,9 +23,19 @@ namespace MVCHomeWork.Areas.HomeWork.Controllers
             return View("Index", 1);
         }
 
-        public ActionResult QueryList(QueryCompanyModel model)
+        public ActionResult Query()
+        {
+            return PartialView(new QueryCompanyModel());
+        }
+
+        public ActionResult QueryDataList(QueryCompanyModel model)
         {
             return PartialView(CompanyRepo.Query(model));
+        }
+
+        public ActionResult QueryList(QueryCompanyModel model)
+        {
+            return PartialView(ListRepo.Query(model));
         }
 
         public ActionResult Edit(int id)

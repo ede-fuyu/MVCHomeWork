@@ -6,15 +6,30 @@
 </div>
 
 <script type="text/javascript">
+    function Backtrack() {
+        $("#CompanyBody").empty().load("@Url.Action("Query")", function () {
+            $.unblockUI();
+        });
+    }
+
     function loadDataList(model) {
+        @if(Model == 0)
+        {<text>
+        var url = "@Url.Action("QueryDataList", "Company")";
         BlockUIWindow("...客戶資料清單載入中...");
-        $("#ClientListView").empty().load("@Url.Action("QueryList", "Company")", { model: model }, function () {
+        </text>}
+        else
+        {<text>
+        var url = "@Url.Action("QueryList", "Company")";
+        BlockUIWindow("...客戶清單載入中...");
+        </text>}
+        $("#ClientListView").empty().load(url, { model: model }, function () {
             $.unblockUI();
         });
     }
 
     function loadEdit(id, url) {
-        if (dataid === 0) {
+        if (id === 0) {
             BlockUIWindow("...新增客戶資料頁面載入中...");
         } else if (url.indexOf("Detail")) {
             BlockUIWindow("...客戶資料頁面載入中...");
