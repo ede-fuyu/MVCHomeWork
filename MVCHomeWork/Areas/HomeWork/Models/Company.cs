@@ -21,7 +21,7 @@ namespace MVCHomeWork.Areas.HomeWork.Models
             this.Contacts = new HashSet<Contacts>();
         }
     
-        public int Id { get; set; }
+        public int CompanyId { get; set; }
         public string CompanyName { get; set; }
         public string CompanyNo { get; set; }
         public Nullable<int> CompanyType { get; set; }

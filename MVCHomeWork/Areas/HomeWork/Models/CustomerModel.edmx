@@ -133,9 +133,9 @@ warning 6002: The table/view 'D:\MVC訓練課程\MVCHOMEWORK\MVCHOMEWORK\APP_DAT
         </EntityType>
         <EntityType Name="Company">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="CompanyId" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CompanyId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CompanyName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="CompanyNo" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="CompanyType" Type="Int32" />
@@ -192,7 +192,7 @@ warning 6002: The table/view 'D:\MVC訓練課程\MVCHOMEWORK\MVCHOMEWORK\APP_DAT
           <End Role="BankInfo" Type="CustomerModel.BankInfo" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Company">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="CompanyId" />
             </Principal>
             <Dependent Role="BankInfo">
               <PropertyRef Name="CompanyId" />
@@ -204,7 +204,7 @@ warning 6002: The table/view 'D:\MVC訓練課程\MVCHOMEWORK\MVCHOMEWORK\APP_DAT
           <End Role="Contacts" Type="CustomerModel.Contacts" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Company">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="CompanyId" />
             </Principal>
             <Dependent Role="Contacts">
               <PropertyRef Name="CompanyId" />
@@ -245,7 +245,7 @@ warning 6002: The table/view 'D:\MVC訓練課程\MVCHOMEWORK\MVCHOMEWORK\APP_DAT
           <EntitySetMapping Name="Company">
             <EntityTypeMapping TypeName="CustomerModel.Company">
               <MappingFragment StoreEntitySet="客戶資料">
-                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CompanyId" ColumnName="Id" />
                 <ScalarProperty Name="CompanyName" ColumnName="客戶名稱" />
                 <ScalarProperty Name="CompanyNo" ColumnName="統一編號" />
                 <ScalarProperty Name="CompanyType" ColumnName="客戶分類" />

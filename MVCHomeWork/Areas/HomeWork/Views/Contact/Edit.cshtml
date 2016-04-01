@@ -23,7 +23,7 @@
                 {
                     using (Html.BeginForm(null, null, FormMethod.Post, new { id = "formEdit", autocomplete = "off" }))
                     {
-                    <input id="Id" type="hidden" value="@Model.Id" name="Id">
+                    @Html.HiddenFor(p => p.Id)
                     @Html.HiddenFor(p => p.IsDelete)
                     <ul class="inline">
                         @if (Model.CompanyId != 0)
