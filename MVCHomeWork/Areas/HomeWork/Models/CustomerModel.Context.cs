@@ -7,16 +7,16 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MVCHomeWork.Areas.作業一.Models
+namespace MVCHomeWork.Areas.HomeWork.Models
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class 作業一資料Entities : DbContext
+    public partial class CustomerEntities : DbContext
     {
-        public 作業一資料Entities()
-            : base("name=作業一資料Entities")
+        public CustomerEntities()
+            : base("name=CustomerEntities")
         {
         }
     
@@ -25,9 +25,10 @@ namespace MVCHomeWork.Areas.作業一.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<客戶資料> 客戶資料 { get; set; }
-        public virtual DbSet<客戶銀行資訊> 客戶銀行資訊 { get; set; }
-        public virtual DbSet<客戶聯絡人> 客戶聯絡人 { get; set; }
-        public virtual DbSet<清單> 清單 { get; set; }
+        public virtual DbSet<ConfigCode> ConfigCode { get; set; }
+        public virtual DbSet<Company> Company { get; set; }
+        public virtual DbSet<BankInfo> BankInfo { get; set; }
+        public virtual DbSet<Contacts> Contacts { get; set; }
+        public virtual DbSet<CustomersList> CustomersList { get; set; }
     }
 }

@@ -7,22 +7,22 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MVCHomeWork.Areas.作業一.Models
+namespace MVCHomeWork.Areas.HomeWork.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class 客戶聯絡人
+    public partial class BankInfo
     {
         public int Id { get; set; }
-        public int 客戶Id { get; set; }
-        public string 職稱 { get; set; }
-        public string 姓名 { get; set; }
-        public string Email { get; set; }
-        public string 手機 { get; set; }
-        public string 電話 { get; set; }
-        public bool 是否已刪除 { get; set; }
+        public int CompanyId { get; set; }
+        public string BankName { get; set; }
+        public int BankCode { get; set; }
+        public Nullable<int> SubBankCode { get; set; }
+        public string AccountName { get; set; }
+        public string AccountNo { get; set; }
+        public bool IsDelete { get; set; }
     
-        public virtual 客戶資料 客戶資料 { get; set; }
+        public virtual Company Company { get; set; }
     }
 }

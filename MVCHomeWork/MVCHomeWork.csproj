@@ -169,55 +169,38 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
-    <Compile Include="Areas\作業一\Controllers\客戶聯絡人管理Controller.cs" />
-    <Compile Include="Areas\作業一\Controllers\客戶資料管理Controller.cs" />
-    <Compile Include="Areas\作業一\Controllers\客戶銀行帳戶管理Controller.cs" />
-    <Compile Include="Areas\作業一\Models\EFGeneratePartialClass.cs">
+    <Compile Include="Areas\HomeWork\Controllers\CompanyController.cs" />
+    <Compile Include="Areas\HomeWork\HomeWorkAreaRegistration.cs" />
+    <Compile Include="Areas\HomeWork\Models\BankInfo.cs">
+      <DependentUpon>CustomerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\HomeWork\Models\Company.cs">
+      <DependentUpon>CustomerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\HomeWork\Models\ConfigCode.cs">
+      <DependentUpon>CustomerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\HomeWork\Models\Contacts.cs">
+      <DependentUpon>CustomerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\HomeWork\Models\CustomerModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>EFGeneratePartialClass.tt</DependentUpon>
+      <DependentUpon>CustomerModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Areas\作業一\Models\PhoneNumberValidatableAttribute.cs" />
-    <Compile Include="Areas\作業一\Models\作業一資料.Context.cs">
+    <Compile Include="Areas\HomeWork\Models\CustomerModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>作業一資料.Context.tt</DependentUpon>
+      <DependentUpon>CustomerModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Areas\作業一\Models\作業一資料.cs">
+    <Compile Include="Areas\HomeWork\Models\CustomerModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>作業一資料.tt</DependentUpon>
+      <DependentUpon>CustomerModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Areas\作業一\Models\作業一資料.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>作業一資料.edmx</DependentUpon>
+    <Compile Include="Areas\HomeWork\Models\CustomersList.cs">
+      <DependentUpon>CustomerModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Areas\作業一\Models\客戶聯絡人.cs">
-      <DependentUpon>作業一資料.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\作業一\Models\客戶聯絡人.Partial.cs">
-      <DependentUpon>EFGeneratePartialClass.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\作業一\Models\客戶資料.cs">
-      <DependentUpon>作業一資料.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\作業一\Models\客戶資料.Partial.cs">
-      <DependentUpon>EFGeneratePartialClass.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\作業一\Models\客戶銀行資訊.cs">
-      <DependentUpon>作業一資料.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\作業一\Models\客戶銀行資訊.Partial.cs">
-      <DependentUpon>EFGeneratePartialClass.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\作業一\Models\清單.cs">
-      <DependentUpon>作業一資料.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\作業一\Models\清單.Partial.cs">
-      <DependentUpon>EFGeneratePartialClass.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\作業一\作業一AreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -231,19 +214,15 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Areas\作業一\Models\EFGeneratePartialClass.tt">
+    <Content Include="Areas\HomeWork\Models\CustomerModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>EFGeneratePartialClass.cs</LastGenOutput>
+      <DependentUpon>CustomerModel.edmx</DependentUpon>
+      <LastGenOutput>CustomerModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Areas\作業一\Models\作業一資料.Context.tt">
+    <Content Include="Areas\HomeWork\Models\CustomerModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>作業一資料.edmx</DependentUpon>
-      <LastGenOutput>作業一資料.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Areas\作業一\Models\作業一資料.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>作業一資料.edmx</DependentUpon>
-      <LastGenOutput>作業一資料.cs</LastGenOutput>
+      <DependentUpon>CustomerModel.edmx</DependentUpon>
+      <LastGenOutput>CustomerModel.cs</LastGenOutput>
     </Content>
     <Content Include="Content\bootstrap-select.css" />
     <Content Include="Content\bootstrap-select.min.css" />
@@ -259,32 +238,14 @@
     <Content Include="Scripts\bootstrap-select.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Areas\作業一\Views\web.config" />
-    <Content Include="Areas\作業一\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\作業一\Views\Shared\_Layout.cshtml" />
-    <Content Include="Areas\作業一\Views\客戶資料管理\主頁.cshtml" />
-    <Content Include="Areas\作業一\Views\客戶銀行帳戶管理\主頁.cshtml" />
-    <Content Include="Areas\作業一\Views\客戶聯絡人管理\主頁.cshtml" />
-    <Content Include="Areas\作業一\Views\客戶資料管理\查詢頁.cshtml" />
-    <Compile Include="Areas\作業一\Models\QueryModel.cs" />
-    <EntityDeploy Include="Areas\作業一\Models\作業一資料.edmx">
+    <Content Include="Areas\HomeWork\Views\web.config" />
+    <EntityDeploy Include="Areas\HomeWork\Models\CustomerModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>作業一資料.Designer.cs</LastGenOutput>
+      <LastGenOutput>CustomerModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Areas\作業一\Models\作業一資料.edmx.diagram">
-      <DependentUpon>作業一資料.edmx</DependentUpon>
+    <Content Include="Areas\HomeWork\Models\CustomerModel.edmx.diagram">
+      <DependentUpon>CustomerModel.edmx</DependentUpon>
     </Content>
-    <Content Include="Areas\作業一\Views\客戶資料管理\客戶清單.cshtml" />
-    <Content Include="Areas\作業一\Views\客戶資料管理\編輯頁.cshtml" />
-    <Content Include="Areas\作業一\Views\客戶銀行帳戶管理\編輯頁.cshtml" />
-    <Content Include="Areas\作業一\Views\客戶聯絡人管理\編輯頁.cshtml" />
-    <Content Include="Areas\作業一\Views\客戶資料管理\客戶資料清單.cshtml" />
-    <Content Include="Areas\作業一\Views\客戶銀行帳戶管理\查詢頁.cshtml" />
-    <Content Include="Areas\作業一\Views\客戶聯絡人管理\查詢頁.cshtml" />
-    <Content Include="Areas\作業一\Views\客戶銀行帳戶管理\客戶銀行帳戶資料清單.cshtml" />
-    <Content Include="Areas\作業一\Views\客戶聯絡人管理\客戶聯絡人資料清單.cshtml" />
-    <Content Include="Areas\作業一\Views\客戶銀行帳戶管理\QueryBankList.cshtml" />
-    <Content Include="Areas\作業一\Views\客戶聯絡人管理\QueryContactPersonList.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -336,6 +297,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\HomeWork\Views\Company\" />
+    <Folder Include="Areas\HomeWork\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

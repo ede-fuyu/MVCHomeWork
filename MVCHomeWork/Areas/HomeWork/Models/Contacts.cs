@@ -7,17 +7,22 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MVCHomeWork.Areas.作業一.Models
+namespace MVCHomeWork.Areas.HomeWork.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class 清單
+    public partial class Contacts
     {
         public int Id { get; set; }
-        public string 客戶名稱 { get; set; }
-        public Nullable<int> 銀行帳戶數量 { get; set; }
-        public Nullable<int> 聯絡人數量 { get; set; }
-        public string 統一編號 { get; set; }
+        public int CompanyId { get; set; }
+        public string JobTitle { get; set; }
+        public string Name { get; set; }
+        public string Email { get; set; }
+        public string Phone { get; set; }
+        public string Tel { get; set; }
+        public bool IsDelete { get; set; }
+    
+        public virtual Company Company { get; set; }
     }
 }

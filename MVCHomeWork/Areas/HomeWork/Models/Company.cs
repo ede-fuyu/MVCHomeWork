@@ -7,32 +7,33 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MVCHomeWork.Areas.作業一.Models
+namespace MVCHomeWork.Areas.HomeWork.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class 客戶資料
+    public partial class Company
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public 客戶資料()
+        public Company()
         {
-            this.客戶銀行資訊 = new HashSet<客戶銀行資訊>();
-            this.客戶聯絡人 = new HashSet<客戶聯絡人>();
+            this.BankInfo = new HashSet<BankInfo>();
+            this.Contacts = new HashSet<Contacts>();
         }
     
         public int Id { get; set; }
-        public string 客戶名稱 { get; set; }
-        public string 統一編號 { get; set; }
-        public string 電話 { get; set; }
-        public string 傳真 { get; set; }
-        public string 地址 { get; set; }
+        public string CompanyName { get; set; }
+        public string CompanyNo { get; set; }
+        public Nullable<int> CompanyType { get; set; }
+        public string Tel { get; set; }
+        public string Fax { get; set; }
+        public string Address { get; set; }
         public string Email { get; set; }
-        public bool 是否已刪除 { get; set; }
+        public bool IsDelete { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<客戶銀行資訊> 客戶銀行資訊 { get; set; }
+        public virtual ICollection<BankInfo> BankInfo { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<客戶聯絡人> 客戶聯絡人 { get; set; }
+        public virtual ICollection<Contacts> Contacts { get; set; }
     }
 }

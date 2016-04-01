@@ -24,7 +24,12 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li class="dropdown">
+                    <li>@Html.ActionLink("客戶清單查詢", "清單查詢", "客戶資料管理", new { area = "HomeWork" }, new { })</li>
+                    <li>@Html.ActionLink("客戶資料管理", "主頁", "客戶資料管理", new { area = "HomeWork" }, new { })</li>
+                    <li>@Html.ActionLink("客戶聯絡人管理", "主頁", "客戶聯絡人管理", new { area = "HomeWork" }, new { })</li>
+                    <li>@Html.ActionLink("客戶銀行帳戶管理", "主頁", "客戶銀行帳戶管理", new { area = "HomeWork" }, new { })</li>
+
+                    @*<li class="dropdown">
                         <a id="dLabel" data-target="#" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                             作業一
                             <span class="caret"></span>
@@ -35,7 +40,7 @@
                                 <li>@Html.ActionLink("客戶聯絡人管理", "主頁", "客戶聯絡人管理", new { area = "作業一" }, new { })</li>
                                 <li>@Html.ActionLink("客戶銀行帳戶管理", "主頁", "客戶銀行帳戶管理", new { area = "作業一" }, new { })</li>
                             </ul>
-                        </li>
+                        </li>*@
                     @*<li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>*@
