@@ -1,0 +1,43 @@
+﻿@model IEnumerable<MVCHomeWork.Areas.HomeWork.Models.CustomersList>
+
+@if (Model.Count() > 0)
+{
+    <table class="table">
+        <tr>
+            <th style="width: 500px;">
+                @Html.DisplayNameFor(p => p.CompanyName)
+            </th>
+            <th style="width: 100px; text-align:center">
+                @Html.DisplayNameFor(p => p.BankCount)
+            </th>
+            <th style="width: 100px; text-align:center">
+                @Html.DisplayNameFor(p => p.ContactCount)
+            </th>
+            <th style="width: 180px; text-align:center">功能</th>
+        </tr>
+        @foreach (var p in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(m => p.CompanyName)
+                </td>
+                <td style="text-align:center">
+                    @Html.DisplayFor(m => p.BankCount)
+                </td>
+                <td style="text-align:center">
+                    @Html.DisplayFor(m => p.ContactCount)
+                </td>
+                <td style="text-align:center">
+                    <button type="button" class="btn btn-xs btn-info" onclick="loadEdit('@p.Id', '@Url.Action("Edit", "Company")')">編輯</button>
+                    <button type="button" class="btn btn-xs btn-warning" onclick="loadEdit('@p.Id', '@Url.Action("Detail", "Company")')">檢視</button>
+                    <button type="button" class="btn btn-xs btn-danger" onclick="delCompanyData('@p.Id', '@p.CompanyName')">刪除</button>
+                </td>
+
+            </tr>
+        }
+    </table>
+}
+else
+{
+    <h3 style="color: red;">查無資料</h3>
+}

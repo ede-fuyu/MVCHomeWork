@@ -1,0 +1,52 @@
+﻿@model MVCHomeWork.Areas.HomeWork.Models.QueryBankModel
+
+<div class="col-md-12 content">
+    <div class="panel panel-default" style="margin-top: 10px;">
+        <div class="panel-heading">
+            <h4>客戶銀行帳戶資料查詢</h4>
+            <div class="pull-right" style="margin-top: -37px;">
+                <button id="btnSearch" type="button" class="btn btn-success" onclick="loadDataList($('#formQuery').MVCModelSerialize());">查詢</button>
+                <button id="btnCreateClient" type="button" class="btn btn-primary" onclick="loadEditBankInfo(0, 0, '@Url.Action("Edit", "BankInfo")');">新增</button>
+            </div>
+        </div>
+        <div class="panel-body">
+            @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "formQuery", autocomplete = "off" }))
+            {
+                <ul class="inline">
+                    <li class="li-small">
+                        @Html.LabelFor(p => p.CompanyNo)
+                        @Html.TextBoxFor(p => p.CompanyNo)
+                    </li>
+                    <li class="li-xxlarge">
+                        @Html.LabelFor(p => p.CompanyName)
+                        @Html.TextBoxFor(p => p.CompanyName)
+                    </li>
+                    <li class="li-large">
+                        @Html.LabelFor(p => p.BankName)
+                        @Html.TextBoxFor(p => p.BankName)
+                    </li>
+                    <li class="li-mini">
+                        @Html.LabelFor(p => p.BankNo)
+                        @Html.TextBoxFor(p => p.BankNo)
+                    </li>
+                    <li class="li-medium">
+                        @Html.LabelFor(p => p.AccountName)
+                        @Html.TextBoxFor(p => p.AccountName)
+                    </li>
+                </ul>
+            }
+        </div>
+    </div>
+    <div id="BankList" class="panel panel-default" style="margin-top: -15px;">
+        <div class="panel-heading">
+            <h4 id="listTitle">客戶銀行帳戶資料清單</h4>
+        </div>
+        <div id="BankListView" class="panel-body"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        loadDataList($('#formQuery').MVCModelSerialize());
+    });
+</script>

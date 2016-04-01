@@ -1,0 +1,61 @@
+﻿@model IEnumerable<MVCHomeWork.Areas.HomeWork.Models.Contacts>
+
+@if (Model.Count() > 0)
+{
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(p => p.JobTitle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(p => p.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(p => p.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(p => p.Phone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(p => p.Tel)
+            </th>
+            <th>
+                @Html.DisplayNameFor(p => p.Company.CompanyName)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var p in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(m => p.JobTitle)
+                </td>
+                <td>
+                    @Html.DisplayFor(m => p.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(m => p.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(m => p.Phone)
+                </td>
+                <td>
+                    @Html.DisplayFor(m => p.Tel)
+                </td>
+                <td>
+                    @Html.DisplayFor(m => p.Company.CompanyName)
+                </td>
+                <td>
+                    <button type="button" class="btn btn-xs btn-info" onclick="loadEditContactPersonInfo('@p.CompanyId', '@p.Id', '@Url.Action("Edit", "Contact")')">編輯</button>
+                    <button type="button" class="btn btn-xs btn-warning" onclick="loadEditContactPersonInfo('@p.CompanyId','@p.Id', '@Url.Action("Detail", "Contact")')">檢視</button>
+                    <button type="button" class="btn btn-xs btn-danger" onclick="delContactPerson('@p.Id', '@p.Name')">刪除</button>
+                </td>
+            </tr>
+        }
+    </table>
+}
+else
+{
+    <h3 style="color: red;">查無資料</h3>
+}

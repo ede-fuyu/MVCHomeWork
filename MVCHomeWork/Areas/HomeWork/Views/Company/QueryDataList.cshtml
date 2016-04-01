@@ -1,0 +1,60 @@
+﻿@model IEnumerable<MVCHomeWork.Areas.HomeWork.Models.Company>
+
+@if (Model.Count() > 0)
+{
+    <table class="table">
+        <tr>
+            <th style="width: 150px;">
+                @Html.DisplayNameFor(p => p.CompanyName)
+            </th>
+            <th style="width: 60px;">
+                @Html.DisplayNameFor(p => p.CompanyNo)
+            </th>
+            <th style="width: 80px;">
+                @Html.DisplayNameFor(p => p.Tel)
+            </th>
+            <th style="width: 80px;">
+                @Html.DisplayNameFor(p => p.Fax)
+            </th>
+            <th style="width: 150px;">
+                @Html.DisplayNameFor(p => p.Address)
+            </th>
+            <th style="width: 100px;">
+                @Html.DisplayNameFor(p => p.Email)
+            </th>
+            <th style="width: 120px;">功能</th>
+        </tr>
+        @foreach (var p in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(m => p.CompanyName)
+                </td>
+                <td>
+                    @Html.DisplayFor(m => p.CompanyNo)
+                </td>
+                <td>
+                    @Html.DisplayFor(m => p.Tel)
+                </td>
+                <td>
+                    @Html.DisplayFor(m => p.Fax)
+                </td>
+                <td>
+                    @Html.DisplayFor(m => p.Address)
+                </td>
+                <td>
+                    @Html.DisplayFor(m => p.Email)
+                </td>
+                <td>
+                    <button type="button" class="btn btn-xs btn-info" onclick="loadEdit('@p.Id', '@Url.Action("Edit", "Company")')">編輯</button>
+                    <button type="button" class="btn btn-xs btn-warning" onclick="loadEdit('@p.Id', '@Url.Action("Detail", "Company")')">檢視</button>
+                    <button type="button" class="btn btn-xs btn-danger" onclick="delCompanyData('@p.Id', '@p.CompanyName')">刪除</button>
+                </td>
+            </tr>
+        }
+    </table>
+}
+else
+{
+    <h3 style="color: red;">查無資料</h3>
+}

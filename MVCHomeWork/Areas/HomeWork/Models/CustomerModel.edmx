@@ -154,8 +154,8 @@ warning 6002: The table/view 'D:\MVC訓練課程\MVCHOMEWORK\MVCHOMEWORK\APP_DAT
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CompanyId" Type="Int32" Nullable="false" />
           <Property Name="BankName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="BankCode" Type="Int32" Nullable="false" />
-          <Property Name="SubBankCode" Type="Int32" />
+          <Property Name="BankNo" Type="Int32" Nullable="false" />
+          <Property Name="SubBankNo" Type="Int32" />
           <Property Name="AccountName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="AccountNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="IsDelete" Type="Boolean" Nullable="false" />
@@ -263,8 +263,8 @@ warning 6002: The table/view 'D:\MVC訓練課程\MVCHOMEWORK\MVCHOMEWORK\APP_DAT
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="CompanyId" ColumnName="客戶Id" />
                 <ScalarProperty Name="BankName" ColumnName="銀行名稱" />
-                <ScalarProperty Name="BankCode" ColumnName="銀行代碼" />
-                <ScalarProperty Name="SubBankCode" ColumnName="分行代碼" />
+                <ScalarProperty Name="BankNo" ColumnName="銀行代碼" />
+                <ScalarProperty Name="SubBankNo" ColumnName="分行代碼" />
                 <ScalarProperty Name="AccountName" ColumnName="帳戶名稱" />
                 <ScalarProperty Name="AccountNo" ColumnName="帳戶號碼" />
                 <ScalarProperty Name="IsDelete" ColumnName="是否已刪除" />

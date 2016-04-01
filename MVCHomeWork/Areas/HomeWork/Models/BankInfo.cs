@@ -17,8 +17,8 @@ namespace MVCHomeWork.Areas.HomeWork.Models
         public int Id { get; set; }
         public int CompanyId { get; set; }
         public string BankName { get; set; }
-        public int BankCode { get; set; }
-        public Nullable<int> SubBankCode { get; set; }
+        public int BankNo { get; set; }
+        public Nullable<int> SubBankNo { get; set; }
         public string AccountName { get; set; }
         public string AccountNo { get; set; }
         public bool IsDelete { get; set; }

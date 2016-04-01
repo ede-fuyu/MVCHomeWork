@@ -1,0 +1,155 @@
+﻿@model MVCHomeWork.Areas.HomeWork.Models.Contacts
+
+@if (Model != null)
+{
+    <div class="col-md-12 content">
+        <div class="panel panel-default" style="margin-top: 10px;">
+            <div class="panel-heading">
+                <h4 class="modal-title">@(ViewBag.isEdit ? (Model.Id == 0 ? "新增" : "編輯") : "")客戶聯絡人</h4>
+                <div class="pull-right" style="margin-top: -30px;">
+                    @Html.ActionLink("回清單", "Index", null, new { @class= "btn btn-default" })
+                    @if (ViewBag.isEdit)
+                    {
+                        if (Model.Id != 0)
+                        {
+                            <button type="button" class="btn btn-danger" onclick="delContactPerson('@Model.Id', '@Model.Name');">刪除</button>
+                        }
+                        <button type="button" class="btn btn-primary" onclick="$('#formEdit').submit();">儲存</button>
+                    }
+                </div>
+            </div>
+            <div class="panel-body">
+               @if (ViewBag.isEdit)
+                {
+                    using (Html.BeginForm(null, null, FormMethod.Post, new { id = "formEdit", autocomplete = "off" }))
+                    {
+                    <input id="Id" type="hidden" value="@Model.Id" name="Id">
+                    @Html.HiddenFor(p => p.IsDelete)
+                    <ul class="inline">
+                        @if (Model.CompanyId != 0)
+                        {
+                            <li class="li-xlarge">
+                                @Html.HiddenFor(p=>p.CompanyId)
+                                @Html.LabelFor(p => p.CompanyId)
+                                @if (Model.Id == 0)
+                                {
+                                    @ViewBag.Client
+                                }
+                                else
+                                {
+                                    @Html.DisplayFor(p => p.Company.CompanyName)
+                                }
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="li-xlarge">
+                                @Html.LabelFor(p => p.CompanyId)
+                                @Html.DropDownListFor(p => p.CompanyId, (SelectList)ViewBag.Client, new { id = "ddlClient", @class = "selectpicker" })
+                            </li>
+                        }
+                        <li class="li-medium">
+                            @Html.LabelFor(p => p.Name)
+                            @Html.TextBoxFor(p => p.Name, new { id = "txtName" })
+                        </li>
+                        <li class="li-medium">
+                            @Html.LabelFor(p => p.JobTitle)
+                            @Html.TextBoxFor(p => p.JobTitle, new { id = "txtPosition" })
+                        </li>
+                        <li class="li-medium">
+                            @Html.LabelFor(p => p.Tel)
+                            @Html.TextBoxFor(p => p.Tel, new { id = "txtTel" })
+                        </li>
+                        <li class="li-medium">
+                            @Html.LabelFor(p => p.Phone)
+                            @Html.TextBoxFor(p => p.Phone, new { id = "txtPhone" })
+                        </li>
+                        <li class="li-xxlarge">
+                            @Html.LabelFor(p => p.Email)
+                            @Html.TextBoxFor(p => p.Email, new { id = "txtEmail" })
+                        </li>
+                    </ul>
+                   }
+               }
+               else
+               {
+                <ul class="inline">
+                    <li class="li-xlarge">
+                        @Html.LabelFor(p => p.CompanyId)
+                        @Html.DisplayFor(p => p.CompanyId)
+                    </li>
+                    <li class="li-medium">
+                        @Html.LabelFor(p => p.Name)
+                        @Html.DisplayFor(p => p.Name)
+                    </li>
+                    <li class="li-medium">
+                        @Html.LabelFor(p => p.JobTitle)
+                        @Html.DisplayFor(p => p.JobTitle)
+                    </li>
+                    <li class="li-medium">
+                        @Html.LabelFor(p => p.Tel)
+                        @Html.DisplayFor(p => p.Tel)
+                    </li>
+                    <li class="li-medium">
+                        @Html.LabelFor(p => p.Phone)
+                        @Html.DisplayFor(p => p.Phone)
+                    </li>
+                    <li class="li-xxlarge">
+                        @Html.LabelFor(p => p.Email)
+                        @Html.DisplayFor(p => p.Email)
+                    </li>
+                </ul>
+               }
+            </div>
+        </div>
+    </div>
+
+    if (ViewBag.isEdit)
+    {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            @if (Model.CompanyId == 0)
+            {<text>
+            $(".selectpicker").selectpicker();
+            </text>}
+
+            $.validator.unobtrusive.parse("#formEdit");
+            $("#formEdit").makeValidationInline();
+            $("#formEdit").submit(function (e) {
+                e.preventDefault();
+                if ($("#formEdit").validate().valid()) {
+                    BlockUIWindow("...客戶銀行帳戶資料儲存中...");
+                    $.ajax({
+                        url: "@Url.Action("Save", "Contact")",
+                        type: 'POST',
+                        data: $("#formEdit").serialize(),
+                        success: function (data) {
+                            alert(data.message);
+                            if (data.isValid) {
+
+                                $("#hidKey").val(data.id);
+                            }
+                            $.unblockUI();
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+    }
+}
+else
+{
+    <div class="col-md-12 content">
+        <div class="panel panel-default" style="margin-top: 10px;">
+            <div class="panel-heading">
+                <div class="pull-right" style="margin-top: -37px;">
+                    @Html.ActionLink("回清單", "Index", null, new { @class = "btn btn-default" })
+                </div>
+            </div>
+            <div class="panel-body">
+                <h4 class="modal-title" style="color:red;">"客戶銀行資料不存在</h4>
+            </div>
+        </div>
+    </div>
+}

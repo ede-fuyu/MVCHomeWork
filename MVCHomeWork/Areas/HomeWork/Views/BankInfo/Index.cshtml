@@ -1,0 +1,45 @@
+﻿@using MVCHomeWork.Areas.HomeWork.Models
+
+<div id="BankBody" class="row">
+    @Html.Partial("Query", new QueryBankModel());
+</div>
+
+<script type="text/javascript">
+    function loadDataList(model) {
+        BlockUIWindow("...客戶銀行帳戶資料清單載入中...");
+        $("#BankListView").empty().load("@Url.Action("QueryList", "BankInfo")", { model: model }, function () {
+            $.unblockUI();
+        });
+    }
+
+    function loadEditBankInfo(id, dataid, url) {
+        if (dataid === 0) {
+            BlockUIWindow("...新增客戶銀行帳戶資料頁面載入中...");
+        } else if (url.indexOf("Detail")) {
+            BlockUIWindow("...客戶銀行帳戶資料頁面載入中...");
+        } else {
+            BlockUIWindow("...編輯客戶銀行帳戶資料頁面載入中...");
+        }
+        $("#BankBody").empty().load(url, { id: id, dataid: dataid }, function () {
+            $.unblockUI();
+        });
+    }
+
+    function delBankData(id, text) {
+        if (confirm('是否要刪除' + text + '的資料?')) {
+            BlockUIWindow("..." + text + "資料刪除中...");
+            $.ajax({
+                url: "@Url.Action("Delete", "BankInfo")",
+                type: 'POST',
+                data: { id: id },
+                success: function (data) {
+                    alert(data.message);
+                    if (data.isValid) {
+                        $("#BankBody").empty().load("@Url.Action("Index")");
+                    }
+                    $.unblockUI();
+                }
+            });
+        }
+    }
+</script>

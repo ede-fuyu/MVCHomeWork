@@ -1,0 +1,45 @@
+﻿@using MVCHomeWork.Areas.HomeWork.Models
+
+<div id="ContactBody" class="row">
+    @Html.Partial("Query", new QueryContactModel());
+</div>
+
+<script type="text/javascript">
+    function loadDataList(model) {
+        BlockUIWindow("...客戶聯絡人清單載入中...");
+        $("#ContactListView").empty().load("@Url.Action("QueryList", "Contact")", { model: model }, function () {
+            $.unblockUI();
+        });
+    }
+
+    function loadEditContactPersonInfo(id, dataid, url) {
+        if (dataid === 0) {
+            BlockUIWindow("...新增客戶聯絡人資料頁面載入中...");
+        } else if (url.indexOf("Detail")) {
+            BlockUIWindow("...客戶聯絡人資料頁面載入中...");
+        } else {
+            BlockUIWindow("...編輯客戶聯絡人資料頁面載入中...");
+        }
+        $("#ContactBody").empty().load(url, { id: id, dataid: dataid }, function () {
+            $.unblockUI();
+        });
+    }
+
+    function delContactPerson(id, text) {
+        if (confirm('是否要刪除聯絡人' + text + '的資料?')) {
+            BlockUIWindow("...聯絡人" + text + "資料刪除中...");
+            $.ajax({
+                url: "@Url.Action("Delete", "Contact")",
+                type: 'POST',
+                data: { id: id },
+                success: function (data) {
+                    alert(data.message);
+                    if (data.isValid) {
+                        $("#ContactBody").empty().load("@Url.Action("Index")");
+                    }
+                    $.unblockUI();
+                }
+            });
+        }
+    }
+</script>
