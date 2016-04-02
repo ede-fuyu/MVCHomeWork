@@ -47,9 +47,9 @@ namespace MVCHomeWork.Areas.HomeWork.Models
                     i++;
                     row = sheet.CreateRow(i);
                     j = 0;
+                    PropertyInfo[] ps = item.GetType().GetProperties();
                     foreach (var col in coltitle)
                     {
-                        PropertyInfo[] ps = item.GetType().GetProperties();
                         if (ps.Any(p => p.Name == col.Key))
                         {
                             var value = ps.Where(p => p.Name == col.Key).First().GetValue(item);
@@ -92,9 +92,9 @@ namespace MVCHomeWork.Areas.HomeWork.Models
                     i++;
                     row = sheet.CreateRow(i);
                     j = 0;
+                    PropertyInfo[] ps = item.GetType().GetProperties();
                     foreach (var col in coltitle)
                     {
-                        PropertyInfo[] ps = item.GetType().GetProperties();
                         if (ps.Any(p => p.Name == col.Key))
                         {
                             var value = ps.Where(p => p.Name == col.Key).First().GetValue(item);
