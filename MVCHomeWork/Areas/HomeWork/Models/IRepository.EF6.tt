@@ -107,7 +107,7 @@ using System.Linq.Expressions;
 
 namespace <#= code.VsNamespaceSuggestion() #>
 {
-	public class EFRepository<T> : IRepository<T> where T : class
+	public class EFRepository<T> : ExcelRepository<T>, IRepository<T> where T : class
 	{
 		public IUnitOfWork UnitOfWork { get; set; }
 		
@@ -143,7 +143,6 @@ namespace <#= code.VsNamespaceSuggestion() #>
 		{
 			//ObjectSet.Remove(entity);
 		}
-
 	}
 }<#fileManager.StartNewFile("EFUnitOfWork.cs");
 #>using System.Data.Entity;

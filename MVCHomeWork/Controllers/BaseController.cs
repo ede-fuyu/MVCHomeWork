@@ -13,5 +13,6 @@ namespace MVCHomeWork.Controllers
         protected CompanyRepository CompanyRepo = RepositoryHelper.GetCompanyRepository();
         protected BankInfoRepository BankRepo = RepositoryHelper.GetBankInfoRepository();
         protected ContactsRepository ContactRepo = RepositoryHelper.GetContactsRepository();
+        protected ConfigCodeRepository CodeRepo = RepositoryHelper.GetConfigCodeRepository();
     }
 }

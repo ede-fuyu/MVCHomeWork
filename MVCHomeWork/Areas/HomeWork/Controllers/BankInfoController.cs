@@ -47,7 +47,7 @@ namespace MVCHomeWork.Areas.HomeWork.Controllers
         {
             if (id == 0)
             {
-                ViewBag.Client = new SelectList(CompanyRepo.All().Select(p => new { value = p.Id, text = p.CompanyName }), "value", "text");
+                ViewBag.Client = new SelectList(CompanyRepo.All().Select(p => new { value = p.CompanyId, text = p.CompanyName }), "value", "text");
             }
             else
             {

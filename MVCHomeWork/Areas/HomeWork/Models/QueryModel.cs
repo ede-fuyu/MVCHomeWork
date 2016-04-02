@@ -13,6 +13,10 @@ namespace MVCHomeWork.Areas.HomeWork.Models
 
         [Display(Name = "統一編號")]
         public string CompanyNo { get; set; }
+
+        [Display(Name = "客戶分類")]
+        public Nullable<int> CompanyType { get; set; }
+
     }
 
     public class QueryBankModel : QueryCompanyModel

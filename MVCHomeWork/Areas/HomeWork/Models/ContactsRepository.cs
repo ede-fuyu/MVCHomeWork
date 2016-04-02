@@ -60,15 +60,15 @@ namespace MVCHomeWork.Areas.HomeWork.Models
             }
         }
 
-        public Contacts Find(int id, int dataid)
+        public Contacts Find(int companyid, int dataid)
         {
             if (dataid != 0)
             {
-                return this.All().FirstOrDefault(p => p.Id == dataid && p.CompanyId == id);
+                return this.All().FirstOrDefault(p => p.Id == dataid && p.CompanyId == companyid);
             }
             else
             {
-                return new Contacts() { CompanyId = id };
+                return new Contacts() { CompanyId = companyid };
             }
         }
 
@@ -76,6 +76,21 @@ namespace MVCHomeWork.Areas.HomeWork.Models
         {
             var context = (CustomerEntities)this.UnitOfWork.Context;
             context.Entry(entity).State = EntityState.Modified;
+        }
+
+        public void BatchUpdate(List<BatchContacts> model)
+        {
+            foreach(var data in model)
+            {
+                var entity = this.Find(data.Id);
+                if(entity != null)
+                {
+                    entity.JobTitle = data.JobTitle;
+                    entity.Phone = data.Phone;
+                    entity.Tel = data.Tel;
+                    this.Update(entity);
+                }
+            }
         }
 
         public override void Delete(Contacts entity)

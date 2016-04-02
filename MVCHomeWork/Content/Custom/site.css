@@ -16,14 +16,14 @@ ul.inline >li{
     margin: 5px 0px 0px 0px;
 }
 
-ul.inline> li > input[type="text"] {
+ul.inline> li > input[type="text"], td > input[type=text] {
 background-color: #FFFFFF;
 border: 1px solid #D5D5D5;
 border-radius: 0;
 box-shadow: none !important;
 color: #000000;
 }
-ul.inline> li > input[type="text"]:focus {
+ul.inline> li > input[type="text"]:focus, td > input[type=text]:focus {
 background-color: #FFFFFF;
 border-color: #F59942;
 color: #000000;
@@ -110,4 +110,29 @@ li.li-xxlarge > div.input-group > input[type="text"] {
 
 li.li-xxlarge > div.input-group > .input-group-btn {
     width: 0%;
-} 
+}
+
+.input-mini {
+    max-width: 100%;
+    width: 60px !important;
+}
+.input-small {
+    max-width: 100%;
+    width: 100px !important;
+}
+.input-medium {
+    max-width: 100%;
+    width: 150px !important;
+}
+.input-large {
+    max-width: 100%;
+    width: 210px !important;
+}
+.input-xlarge {
+    max-width: 100%;
+    width: 270px !important;
+}
+.input-xxlarge {
+    max-width: 100%;
+    width: 530px !important;
+}

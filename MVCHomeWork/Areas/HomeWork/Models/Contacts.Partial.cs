@@ -50,11 +50,32 @@ namespace MVCHomeWork.Areas.HomeWork.Models
         public string Phone { get; set; }
         
         [StringLength(50, ErrorMessage= "電話欄位長度不得大於 50 個字元")]
+        [Display(Name = "電話")]
         public string Tel { get; set; }
 
         [Required]
         public bool IsDelete { get; set; }
     
         public virtual Company Company { get; set; }
+    }
+
+    public class BatchContacts
+    {
+        [Required]
+        public int Id { get; set; }
+
+        [StringLength(50, ErrorMessage = "職稱欄位長度不得大於 50 個字元")]
+        [Required(ErrorMessage = "職稱必需填寫")]
+        [Display(Name = "職稱")]
+        public string JobTitle { get; set; }
+
+        [StringLength(50, ErrorMessage = "手機欄位長度不得大於 50 個字元")]
+        [PhoneNumberValidatable(ErrorMessage = "手機格式輸入錯誤")]
+        [Display(Name = "手機")]
+        public string Phone { get; set; }
+
+        [StringLength(50, ErrorMessage = "電話欄位長度不得大於 50 個字元")]
+        [Display(Name = "電話")]
+        public string Tel { get; set; }
     }
 }

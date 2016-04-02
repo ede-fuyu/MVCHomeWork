@@ -38,25 +38,37 @@ namespace MVCHomeWork.Areas.HomeWork.Controllers
             return PartialView(ListRepo.Query(model));
         }
 
+        public ActionResult ExportXLSDataList(QueryCompanyModel model)
+        {
+
+            
+             return File(CompanyRepo.ExportXLS(CompanyRepo.Query(model)), "application/vnd.ms-excel", "客戶資料.xls");
+
+                //return File(CompanyRepo.ExportXLSX(CompanyRepo.Query(model)), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "客戶資料.xlsx");
+        }
+
         public ActionResult Edit(int id)
         {
             ViewBag.isEdit = true;
-            return loadData(id);
+            ViewBag.Code = new SelectList(CodeRepo.GetCode("CompanyType"), "value", "text");
+            return loadData(CompanyRepo.Find(id));
         }
 
         public ActionResult Detail(int id)
         {
-            ViewBag.isEdit = false;
             if (id == 0)
             {
                 return PartialView("Edit", null);
             }
-            return loadData(id);
+            var model = CompanyRepo.Find(id);
+            ViewBag.isEdit = false;
+            ViewBag.Code = CodeRepo.GetCode((int)model.CompanyType, "CompanyType");
+            return loadData(model);
         }
 
-        public ActionResult loadData(int id)
+        public ActionResult loadData(Company model)
         {
-            return PartialView("Edit", CompanyRepo.Find(id));
+            return PartialView("Edit", model);
         }
 
         public ActionResult Save(Company model)
@@ -66,7 +78,7 @@ namespace MVCHomeWork.Areas.HomeWork.Controllers
             {
                 try
                 {
-                    if (model.Id == 0)
+                    if (model.CompanyId == 0)
                     {
                         CompanyRepo.Add(model);
                         msg = "客戶資料新增成功";
@@ -77,7 +89,7 @@ namespace MVCHomeWork.Areas.HomeWork.Controllers
                         msg = "客戶資料儲存成功";
                     }
                     CompanyRepo.UnitOfWork.Commit();
-                    return Json(new { id = model.Id, isValid = true, message = HttpUtility.HtmlEncode(msg) });
+                    return Json(new { id = model.CompanyId, isValid = true, message = HttpUtility.HtmlEncode(msg) });
                 }
                 catch (Exception ex)
                 {

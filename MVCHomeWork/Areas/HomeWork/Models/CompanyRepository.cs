@@ -6,7 +6,7 @@ using System.Data.Entity;
 namespace MVCHomeWork.Areas.HomeWork.Models
 {   
 	public  class CompanyRepository : EFRepository<Company>, ICompanyRepository
-	{
+    {
         public override IQueryable<Company> All()
         {
             return base.All().Where(p => p.IsDelete == false);
@@ -42,7 +42,7 @@ namespace MVCHomeWork.Areas.HomeWork.Models
         {
             if (id != 0)
             {
-                return this.All().FirstOrDefault(p => p.Id == id);
+                return this.All().FirstOrDefault(p => p.CompanyId == id);
             }
             else
             {
@@ -60,6 +60,22 @@ namespace MVCHomeWork.Areas.HomeWork.Models
         {
             entity.IsDelete = true;
             this.Update(entity);
+        }
+
+        public override byte[] ExportXLS(IQueryable<Company> entities, params string[] notExportCol)
+        {
+            var notCol = notExportCol.ToList();
+            notCol.Add("CompanyId");
+            notCol.Add("IsDelete");
+            return base.ExportXLS(entities, notCol.ToArray());
+        }
+
+        public override byte[] ExportXLSX(IQueryable<Company> entities, params string[] notExportCol)
+        {
+            var notCol = notExportCol.ToList();
+            notCol.Add("CompanyId");
+            notCol.Add("IsDelete");
+            return base.ExportXLSX(entities, notCol.ToArray());
         }
     }
 

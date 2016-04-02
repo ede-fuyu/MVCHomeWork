@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 
 namespace MVCHomeWork.Areas.HomeWork.Models
 {
-	public class EFRepository<T> : IRepository<T> where T : class
+	public class EFRepository<T> : ExcelRepository<T>, IRepository<T> where T : class
 	{
 		public IUnitOfWork UnitOfWork { get; set; }
 		
@@ -41,6 +41,5 @@ namespace MVCHomeWork.Areas.HomeWork.Models
 		{
 			//ObjectSet.Remove(entity);
 		}
-
 	}
 }

@@ -12,6 +12,19 @@
         });
     }
 
+    function ExportXLS(model) {
+        @if(Model == 0)
+        {<text>
+        var url = "@Url.Action("ExportXLSDataList", "Company")";
+        </text>}
+        else
+        {<text>
+        var url = "@Url.Action("ExportXLSList", "Company")";
+        </text>}
+        $("#formQuery").attr("action", url);
+        $("#formQuery").submit();
+    }
+
     function loadDataList(model) {
         @if(Model == 0)
         {<text>
@@ -41,7 +54,7 @@
         });
     }
 
-    function delBankData(id, text) {
+    function delCompanyData(id, text) {
         if (confirm('是否要刪除' + text + '的資料?')) {
             BlockUIWindow("..." + text + "資料刪除中...");
             $.ajax({

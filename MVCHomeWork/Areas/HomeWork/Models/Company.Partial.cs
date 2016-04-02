@@ -12,7 +12,7 @@ namespace MVCHomeWork.Areas.HomeWork.Models
     public partial class CompanyMetaData
     {
         [Required]
-        public int Id { get; set; }
+        public int CompanyId { get; set; }
         
         [StringLength(50, ErrorMessage= "客戶名稱欄位長度不得大於 50 個字元")]
         [Required(ErrorMessage = "客戶名稱必需填寫")]
@@ -24,6 +24,8 @@ namespace MVCHomeWork.Areas.HomeWork.Models
         [Display(Name = "統一編號")]
         public string CompanyNo { get; set; }
 
+        [Required(ErrorMessage = "客戶分類必需填寫")]
+        [Display(Name = "客戶分類")]
         public Nullable<int> CompanyType { get; set; }
         
         [StringLength(50, ErrorMessage= "電話欄位長度不得大於 50 個字元")]

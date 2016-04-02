@@ -46,9 +46,9 @@
                     @Html.DisplayFor(m => p.Email)
                 </td>
                 <td>
-                    <button type="button" class="btn btn-xs btn-info" onclick="loadEdit('@p.Id', '@Url.Action("Edit", "Company")')">編輯</button>
-                    <button type="button" class="btn btn-xs btn-warning" onclick="loadEdit('@p.Id', '@Url.Action("Detail", "Company")')">檢視</button>
-                    <button type="button" class="btn btn-xs btn-danger" onclick="delCompanyData('@p.Id', '@p.CompanyName')">刪除</button>
+                    <button type="button" class="btn btn-xs btn-info" onclick="loadEdit('@p.CompanyId', '@Url.Action("Edit", "Company")')">編輯</button>
+                    <button type="button" class="btn btn-xs btn-warning" onclick="loadEdit('@p.CompanyId', '@Url.Action("Detail", "Company")')">檢視</button>
+                    <button type="button" class="btn btn-xs btn-danger" onclick="delCompanyData('@p.CompanyId', '@p.CompanyName')">刪除</button>
                 </td>
             </tr>
         }
@@ -56,5 +56,5 @@
 }
 else
 {
-    <h3 style="color: red;">查無資料</h3>
+    <h3 style="color: red;">沒有資料</h3>
 }

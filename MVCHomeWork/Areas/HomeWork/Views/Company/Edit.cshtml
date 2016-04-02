@@ -5,16 +5,13 @@
     <div class="col-md-12 content">
         <div class="panel panel-default" style="margin-top: 10px;">
             <div class="panel-heading">
-                <h4>@(ViewBag.isEdit ? (Model.Id == 0 ? "新增" : "編輯") : "")客戶資料</h4>
+                <h4>@(ViewBag.isEdit ? (Model.CompanyId == 0 ? "新增" : "編輯") : "")客戶資料</h4>
                 <div class="pull-right" style="margin-top: -37px;">
                     <button type="button" class="btn btn-default" onclick="$('.formError').remove(); Backtrack();">回清單</button>
-                    @if (ViewBag.isEdit)
+                    <button id="btnSave" type="button" class="btn btn-primary" onclick="$('#formEdit').submit();">@(ViewBag.isEdit ? "儲存" : "批次儲存聯絡人資料")</button>
+                    @if (Model.CompanyId != 0)
                     {
-                        <button type="button" class="btn btn-primary" onclick="$('#formEdit').submit();">儲存</button>
-                        if (Model.Id != 0)
-                        {
-                            <button type="button" class="btn btn-danger" onclick="delCompanyData('@Model.Id', '@Model.CompanyName')">刪除</button>
-                        }
+                        <button type="button" class="btn btn-danger" onclick="delCompanyData('@Model.CompanyId', '@Model.CompanyName')">刪除</button>
                     }
                 </div>
             </div>
@@ -23,7 +20,7 @@
                 {
                     using (Html.BeginForm(null, null, FormMethod.Post, new { id = "formEdit", autocomplete = "off" }))
                     {
-                        @Html.HiddenFor(p => p.Id, new { id = "hidKey" })
+                        @Html.HiddenFor(p => p.CompanyId, new { id = "hidKey" })
                         @Html.HiddenFor(p => p.IsDelete)
                         <ul class="inline">
                             <li class="li-xlarge">
@@ -33,6 +30,10 @@
                             <li class="li-medium">
                                 @Html.LabelFor(p => p.CompanyNo)
                                 @Html.TextBoxFor(p => p.CompanyNo)
+                            </li>
+                            <li class="li-medium">
+                                @Html.LabelFor(p => p.CompanyType)
+                                @Html.DropDownListFor(p => p.CompanyType, (SelectList)ViewBag.Code, "請選擇", new { @class = "selectpicker" })
                             </li>
                             <li class="li-medium">
                                 @Html.LabelFor(p => p.Tel)
@@ -65,6 +66,10 @@
                             @Html.DisplayFor(p => p.CompanyNo)
                         </li>
                         <li class="li-medium">
+                            @Html.LabelFor(p => p.CompanyType)
+                            @Html.Raw((string)ViewBag.Code)
+                        </li>
+                        <li class="li-medium">
                             @Html.LabelFor(p => p.Tel)
                             @Html.DisplayFor(p => p.Tel)
                         </li>
@@ -84,25 +89,33 @@
                 }
             </div>
         </div>
-        <div id="SubList" class="panel panel-default" style="margin-top: -15px;">
-            <div class="panel-heading">
-                <h4 id="SubListTitle"></h4>
+        @if (!ViewBag.isEdit)
+        {
+            <div class="panel panel-default" style="margin-top: -15px;">
+                <div class="panel-heading">
+                    <h4>客戶聯絡人清單</h4>
+                </div>
+                @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "formEdit", autocomplete = "off" }))
+                {
+                    <div id="ContactList" class="panel-body">
+                        @Html.Action("QueryContactList", "Contact", new { id = Model.CompanyId })
+                    </div>
+                }
             </div>
-            <div id="SubListView" class="panel-body"></div>
-        </div>
+        }
     </div>
-    
+
     <script type="text/javascript">
         $(document).ready(function () {
-            $("#SubList").hide();
+            $(".selectpicker").selectpicker();
 
-            @if (ViewBag.isEdit)
-            {<text>
             $.validator.unobtrusive.parse("#formEdit");
             $("#formEdit").makeValidationInline();
             $("#formEdit").submit(function (e) {
                 e.preventDefault();
                 if ($("#formEdit").validate().valid()) {
+                    @if (Model.CompanyId == 0)
+                    {<text>
                     BlockUIWindow("...客戶資料儲存中...");
                     $.ajax({
                         url: "@Url.Action("Save", "Company")",
@@ -111,7 +124,7 @@
                         success: function (data) {
                             alert(data.message);
                             if (data.isValid) {
-                                @if (Model.Id == 0)
+                                @if (Model.CompanyId == 0)
                                 {<text>
                                 $("#hidKey").val(data.id);
                                 </text>}
@@ -119,8 +132,41 @@
                             $.unblockUI();
                         }
                     });
+                    </text>}
+                    else
+                    {<text>
+                    BlockUIWindow("...客戶聯絡人資料儲存中...");
+                    var model = {};
+                    $(".ContactData").each(function (i) {
+                        var data = {};
+                        $(".ContactData input").each(function () {
+                            var elem = $(this).attr("id").split('_');
+                            var j = elem[1];
+                            if(i==j){
+                                data[elem[3]] = this.value;
+                            }
+                        });
+                        model[i] = data;
+                    });
+                    $.ajax({
+                        url: "@Url.Action("BatchSave", "Contact")",
+                        type: 'POST',
+                        data: {model: model},
+                        success: function (data) {
+                            alert(data.message);
+                            $.unblockUI();
+                        }
+                    });
+                    </text>}
                 }
             });
+            @if (Model.CompanyId != 0)
+            {<text>
+            $(".Phone").attr('data-rule-phoneTest', "手機格式輸入錯誤");
+            $.validator.addMethod("phoneTest", function (value, element) {
+                var phone = /^\d{4}-\d{6}$/;
+                return value == '' || phone.test(value);
+            }, function (msg) { return msg });
             </text>}
         });
     </script>

@@ -19,12 +19,14 @@ namespace MVCHomeWork.Areas.HomeWork.Controllers
 
         public ActionResult QueryList(QueryContactModel model)
         {
+            ViewBag.isEdit = false;
             return PartialView(ContactRepo.Query(model));
         }
 
-        public ActionResult QueryContactPersonList(int id)
+        public ActionResult QueryContactList(int id)
         {
-            return PartialView(ContactRepo.Query(id));
+            ViewBag.isEdit = true;
+            return PartialView("QueryList", ContactRepo.Query(id));
         }
 
         public ActionResult Edit(int id, int dataid)
@@ -47,7 +49,7 @@ namespace MVCHomeWork.Areas.HomeWork.Controllers
         {
             if (id == 0)
             {
-                ViewBag.Client = new SelectList(CompanyRepo.All().Select(p => new { value = p.Id, text = p.CompanyName }), "value", "text");
+                ViewBag.Client = new SelectList(CompanyRepo.All().Select(p => new { value = p.CompanyId, text = p.CompanyName }), "value", "text");
             }
             else
             {
@@ -76,6 +78,26 @@ namespace MVCHomeWork.Areas.HomeWork.Controllers
                     }
                     ContactRepo.UnitOfWork.Commit();
                     return Json(new { id = model.Id, isValid = true, message = HttpUtility.HtmlEncode(msg) });
+                }
+                catch (Exception ex)
+                {
+                    return Json(new { isValid = false, message = HttpUtility.HtmlEncode("客戶聯絡人儲存失敗。錯誤訊息: " + ex.Message) });
+                }
+            }
+            msg = string.Join(" ", ModelState.Values.SelectMany(p => p.Errors).Select(p => p.ErrorMessage));
+            return Json(new { isValid = false, message = HttpUtility.HtmlEncode("客戶聯絡人儲存時，驗證欄位失敗。" + msg) });
+        }
+
+        public ActionResult BatchSave(List<BatchContacts> model)
+        {
+            var msg = string.Empty;
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    ContactRepo.BatchUpdate(model);
+                    ContactRepo.UnitOfWork.Commit();
+                    return Json(new { isValid = true, message = HttpUtility.HtmlEncode("客戶聯絡人資料更新成功") });
                 }
                 catch (Exception ex)
                 {

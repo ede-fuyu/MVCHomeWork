@@ -2,6 +2,7 @@
 
 @if (Model.Count() > 0)
 {
+    var data = Model.ToList();
     <table class="table">
         <tr>
             <th>
@@ -22,40 +23,75 @@
             <th>
                 @Html.DisplayNameFor(p => p.Company.CompanyName)
             </th>
-            <th></th>
+            @if (!ViewBag.isEdit)
+            {
+                <th></th>
+            }
         </tr>
 
-        @foreach (var p in Model)
+        @for (int i = 0; i < data.Count(); i++)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(m => p.JobTitle)
-                </td>
-                <td>
-                    @Html.DisplayFor(m => p.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(m => p.Email)
-                </td>
-                <td>
-                    @Html.DisplayFor(m => p.Phone)
-                </td>
-                <td>
-                    @Html.DisplayFor(m => p.Tel)
-                </td>
-                <td>
-                    @Html.DisplayFor(m => p.Company.CompanyName)
-                </td>
-                <td>
-                    <button type="button" class="btn btn-xs btn-info" onclick="loadEditContactPersonInfo('@p.CompanyId', '@p.Id', '@Url.Action("Edit", "Contact")')">編輯</button>
-                    <button type="button" class="btn btn-xs btn-warning" onclick="loadEditContactPersonInfo('@p.CompanyId','@p.Id', '@Url.Action("Detail", "Contact")')">檢視</button>
-                    <button type="button" class="btn btn-xs btn-danger" onclick="delContactPerson('@p.Id', '@p.Name')">刪除</button>
-                </td>
-            </tr>
+            if (!ViewBag.isEdit)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(m => data[i].JobTitle)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => data[i].Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => data[i].Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => data[i].Phone)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => data[i].Tel)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => data[i].Company.CompanyName)
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-xs btn-info" onclick="loadEditContactPersonInfo('@data[i].CompanyId', '@data[i].Id', '@Url.Action("Edit", "Contact")')">編輯</button>
+                        <button type="button" class="btn btn-xs btn-warning" onclick="loadEditContactPersonInfo('@data[i].CompanyId','@data[i].Id', '@Url.Action("Detail", "Contact")')">檢視</button>
+                        <button type="button" class="btn btn-xs btn-danger" onclick="delContactPerson('@data[i].Id', '@data[i].Name')">刪除</button>
+                    </td>
+                </tr>
+            }
+            else
+            {
+                <tr class="ContactData">
+                    <td>
+                        @Html.HiddenFor(m => data[i].Id)
+                        @Html.TextBoxFor(m => data[i].JobTitle, new { @class = "input-medium" })
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => data[i].Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => data[i].Email)
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(m => data[i].Phone, new { @class = "input-medium Phone" })
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(m => data[i].Tel, new { @class = "input -medium" })
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => data[i].Company.CompanyName)
+                    </td>
+                </tr>
+            }
         }
     </table>
 }
 else
 {
-    <h3 style="color: red;">查無資料</h3>
+    <h3 style="color: red;">沒有資料</h3>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#btnSave").remove();
+        });
+    </script>
 }
