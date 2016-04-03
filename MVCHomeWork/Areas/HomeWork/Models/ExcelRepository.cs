@@ -1,20 +1,14 @@
-﻿using Newtonsoft.Json;
-using NPOI.HSSF.UserModel;
+﻿using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
+using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Reflection;
-using System.Web;
-using System.Web.ModelBinding;
-using System.Web.Mvc;
 
 namespace MVCHomeWork.Areas.HomeWork.Models
 {
@@ -25,34 +19,55 @@ namespace MVCHomeWork.Areas.HomeWork.Models
         byte[] ExportXLSX(IQueryable<T> entities, params string[] notExportCol);
     }
 
-    public class ExcelRepository<T> : IExcelRepository<T>
+    public class ExcelRepository<T> : IExcelRepository<T> 
     {
         public virtual byte[] ExportXLS(IQueryable<T> entities, params string[] notExportCol)
         {
             var coltitle = GetColumnTitle(entities.ElementType, notExportCol);
             if (coltitle.Count() > 0)
             {
+                int i = 0, j = 0;
                 HSSFWorkbook workbook = new HSSFWorkbook();
                 ISheet sheet = workbook.CreateSheet(entities.ElementType.Name);
-                int i = 0, j = 0;
                 IRow row = sheet.CreateRow(i);
                 foreach (var col in coltitle)
                 {
-                    row.CreateCell(j).SetCellValue(col.Value);
+                    row.CreateCell(j).SetCellValue(col.DisplayName);
                     j++;
                 }
 
                 foreach (var item in entities)
                 {
                     i++;
-                    row = sheet.CreateRow(i);
                     j = 0;
+                    row = sheet.CreateRow(i);
                     PropertyInfo[] ps = item.GetType().GetProperties();
                     foreach (var col in coltitle)
                     {
-                        if (ps.Any(p => p.Name == col.Key))
+                        if (ps.Any(p => p.Name == col.Name))
                         {
-                            var value = ps.Where(p => p.Name == col.Key).First().GetValue(item);
+                            var value = ps.Where(p => p.Name == col.Name).First().GetValue(item);
+                            if (!string.IsNullOrEmpty(col.Description))
+                            {
+                                var Description = col.Description.Split('.');
+                                if (Description[0] == "FK")
+                                {
+                                    var obj = ps.Where(p => p.Name == Description[1]).First().GetValue(item);
+                                    value = obj.GetType().GetProperties().Where(p => p.Name == Description[2]).First().GetValue(obj);
+                                }
+                                else if(Description[0] == "CodeConfig")
+                                {
+                                    value = ps.Where(p => p.Name == col.Name).First().GetValue(item);
+                                    if (value != null) {
+                                        var context = new EFUnitOfWork().Context;
+                                        var configcode = context.Database.SqlQuery<ConfigCode>("Select * from ConfigCode Where CodeType = @param1 and CodeKey = @param2",
+                                            new SqlParameter("param1", Description[1]),
+                                            new SqlParameter("param2", value.ToString())).FirstOrDefault();
+                                        value = configcode.GetType().GetProperties().Where(p => p.Name == Description[2]).First().GetValue(configcode);
+                                    }
+                                }
+                            }
+
                             if (value == null)
                             {
                                 row.CreateCell(j).SetCellValue("");
@@ -77,27 +92,49 @@ namespace MVCHomeWork.Areas.HomeWork.Models
             var coltitle = GetColumnTitle(entities.ElementType, notExportCol);
             if (coltitle.Count() > 0)
             {
+                int i = 0, j = 0;
                 XSSFWorkbook workbook = new XSSFWorkbook();
                 ISheet sheet = workbook.CreateSheet(entities.ElementType.Name);
-                int i = 0, j = 0;
                 IRow row = sheet.CreateRow(i);
                 foreach (var col in coltitle)
                 {
-                    row.CreateCell(j).SetCellValue(col.Value);
+                    row.CreateCell(j).SetCellValue(col.DisplayName);
                     j++;
                 }
 
                 foreach (var item in entities)
                 {
                     i++;
-                    row = sheet.CreateRow(i);
                     j = 0;
+                    row = sheet.CreateRow(i);
                     PropertyInfo[] ps = item.GetType().GetProperties();
                     foreach (var col in coltitle)
                     {
-                        if (ps.Any(p => p.Name == col.Key))
+                        if (ps.Any(p => p.Name == col.Name))
                         {
-                            var value = ps.Where(p => p.Name == col.Key).First().GetValue(item);
+                            var value = ps.Where(p => p.Name == col.Name).First().GetValue(item);
+                            if (!string.IsNullOrEmpty(col.Description))
+                            {
+                                var Description = col.Description.Split('.');
+                                if (Description[0] == "FK")
+                                {
+                                    var obj = ps.Where(p => p.Name == Description[1]).First().GetValue(item);
+                                    value = obj.GetType().GetProperties().Where(p => p.Name == Description[2]).First().GetValue(obj);
+                                }
+                                else if (Description[0] == "CodeConfig")
+                                {
+                                    value = ps.Where(p => p.Name == col.Name).First().GetValue(item);
+                                    if (value != null)
+                                    {
+                                        var context = new EFUnitOfWork().Context;
+                                        var configcode = context.Database.SqlQuery<ConfigCode>("Select * from ConfigCode Where CodeType = @param1 and CodeKey = @param2",
+                                            new SqlParameter("param1", Description[1]),
+                                            new SqlParameter("param2", value.ToString())).FirstOrDefault();
+                                        value = configcode.GetType().GetProperties().Where(p => p.Name == Description[2]).First().GetValue(configcode);
+                                    }
+                                }
+                            }
+
                             if (value == null)
                             {
                                 row.CreateCell(j).SetCellValue("");
@@ -118,42 +155,80 @@ namespace MVCHomeWork.Areas.HomeWork.Models
         }
 
         #region 私有方法
-        private List<KeyValuePair<string, string>> GetColumnTitle(Type entityType, params string[] notExportCol)
+        private List<ColumnTitle> GetColumnTitle(Type entityType, params string[] notExportCol)
         {
-            var tableTitle = new List<KeyValuePair<string, string>>();
+            var coltitle = new List<ColumnTitle>();
 
             var Properties = entityType.GetProperties().Where(p => p.SetMethod.Attributes == (MethodAttributes.Public | MethodAttributes.HideBySig | MethodAttributes.SpecialName)).ToList();
             foreach (var prop in Properties)
             {
-                var attr = (DisplayAttribute)entityType.GetProperty(prop.Name).GetCustomAttributes(typeof(DisplayAttribute), true).SingleOrDefault();
-                if (attr == null)
+                if (!notExportCol.Any(p => p == prop.Name))
                 {
-                    MetadataTypeAttribute metadataType = (MetadataTypeAttribute)entityType.GetCustomAttributes(typeof(MetadataTypeAttribute), true).FirstOrDefault();
-                    if (metadataType != null)
-                    {
-                        var property = metadataType.MetadataClassType.GetProperty(prop.Name);
-                        if (property != null)
-                        {
-                            attr = (DisplayAttribute)property.GetCustomAttributes(typeof(DisplayAttribute), true).SingleOrDefault();
-                        }
-                    }
-                }
-
-                if (!notExportCol.Any(p=> p == prop.Name))
-                {
-                    var param = new KeyValuePair<string, string>();
+                    var attr = (DisplayAttribute)entityType.GetProperty(prop.Name).GetCustomAttributes(typeof(DisplayAttribute), true).SingleOrDefault();
                     if (attr == null)
                     {
-                        param = new KeyValuePair<string, string>(prop.Name, prop.Name);
+                        MetadataTypeAttribute metadataType = (MetadataTypeAttribute)entityType.GetCustomAttributes(typeof(MetadataTypeAttribute), true).FirstOrDefault();
+                        if (metadataType != null)
+                        {
+                            var property = metadataType.MetadataClassType.GetProperty(prop.Name);
+                            if (property != null)
+                            {
+                                attr = (DisplayAttribute)property.GetCustomAttributes(typeof(DisplayAttribute), true).SingleOrDefault();
+                            }
+                        }
+                    }
+
+                    var column = new ColumnTitle();
+                    if (attr == null)
+                    {
+                        column = new ColumnTitle()
+                        {
+                            Name = prop.Name,
+                            DisplayName = prop.Name
+                        };
+                        coltitle.Add(column);
                     }
                     else if (!notExportCol.Any(p => p == attr.Name))
                     {
-                        param = new KeyValuePair<string, string>(prop.Name, attr.Name);
+                        column = new ColumnTitle()
+                        {
+                            Name = prop.Name,
+                            DisplayName = attr.GetName(),
+                            ShortName = attr.GetShortName(),
+                            Description = attr.GetDescription(),
+                            GroupName = attr.GetGroupName(),
+                            Prompt = attr.GetPrompt(),
+                            Order = attr.GetOrder()
+                        };
+                        coltitle.Add(column);
                     }
-                    tableTitle.Add(param);
                 }
             }
-            return tableTitle;
+            if (coltitle.Any(p => p.Order == null))
+            {
+                return coltitle;
+            }
+            else
+            {
+                return coltitle.OrderBy(p => p.Order).ToList();
+            }
+        }
+
+        private class ColumnTitle
+        {
+            public string Name { get; set; }
+
+            public string DisplayName { get; set; }
+
+            public string ShortName { get; set; }
+
+            public string Description { get; set; }
+
+            public string GroupName { get; set; }
+
+            public string Prompt { get; set; }
+
+            public int? Order { get; set; }
         }
         #endregion
     }

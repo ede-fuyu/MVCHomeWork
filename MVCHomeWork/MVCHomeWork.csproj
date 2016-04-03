@@ -260,7 +260,6 @@
       <DependentUpon>IRepository.EF6.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\HomeWork\Models\ExcelRepository.cs" />
-    <Compile Include="Areas\HomeWork\Models\IExcelRepository.cs" />
     <Compile Include="Areas\HomeWork\Models\IRepository.EF6.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -314,8 +313,11 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Custom\site.css" />
+    <Content Include="Content\font-awesome.css" />
+    <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\validationEngine.jquery.css" />
     <Content Include="favicon.ico" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -336,7 +338,6 @@
     <Content Include="Areas\HomeWork\Views\Company\QueryList.cshtml" />
     <Content Include="Areas\HomeWork\Views\Company\QueryDataList.cshtml" />
     <Content Include="Areas\HomeWork\Views\Company\Edit.cshtml" />
-    <Content Include="Areas\HomeWork\Views\BankInfo\QueryList.cshtml" />
     <Content Include="Areas\HomeWork\Views\BankInfo\Index.cshtml" />
     <Content Include="Areas\HomeWork\Views\BankInfo\Query.cshtml" />
     <Content Include="Areas\HomeWork\Views\BankInfo\Edit.cshtml" />
@@ -345,6 +346,12 @@
     <Content Include="Areas\HomeWork\Views\Contact\Query.cshtml" />
     <Content Include="Areas\HomeWork\Views\Contact\Edit.cshtml" />
     <Content Include="Areas\HomeWork\Views\Company\Index.cshtml" />
+    <Content Include="fonts\FontAwesome.otf" />
+    <Content Include="fonts\fontawesome-webfont.woff2" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="Areas\HomeWork\Views\BankInfo\QueryList.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

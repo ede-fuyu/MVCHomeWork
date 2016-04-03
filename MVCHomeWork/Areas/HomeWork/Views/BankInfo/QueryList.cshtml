@@ -1,0 +1,61 @@
+﻿@model IEnumerable<MVCHomeWork.Areas.HomeWork.Models.BankInfo>
+
+@if (Model.Count() > 0)
+{
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(p => p.BankName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(p => p.BankNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(p => p.SubBankNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(p => p.AccountName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(p => p.AccountNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(p => p.Company.CompanyName)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var p in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(m => p.BankName)
+                </td>
+                <td>
+                    @Html.DisplayFor(m => p.BankNo)
+                </td>
+                <td>
+                    @Html.DisplayFor(m => p.SubBankNo)
+                </td>
+                <td>
+                    @Html.DisplayFor(m => p.AccountName)
+                </td>
+                <td>
+                    @Html.DisplayFor(m => p.AccountNo)
+                </td>
+                <td>
+                    @Html.DisplayFor(m => p.Company.CompanyName)
+                </td>
+                <td>
+                    <button type="button" class="btn btn-xs btn-info" onclick="loadEditBankInfo('@p.CompanyId', '@p.Id', '@Url.Action("Edit", "BankInfo")')">編輯</button>
+                    <button type="button" class="btn btn-xs btn-warning" onclick="loadEditBankInfo('@p.CompanyId','@p.Id', '@Url.Action("Detail", "BankInfo")')">檢視</button>
+                    <button type="button" class="btn btn-xs btn-danger" onclick="delBankData('@p.Id', '@p.BankName')">刪除</button>
+                </td>
+            </tr>
+        }
+    </table>
+}
+else
+{
+    <h3 style="color: red;">沒有資料</h3>
+}

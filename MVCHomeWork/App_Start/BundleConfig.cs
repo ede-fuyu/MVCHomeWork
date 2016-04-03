@@ -33,6 +33,9 @@ namespace MVCHomeWork
 
             bundles.Add(new StyleBundle("~/Content/jqueryval").Include(
                       "~/Content/validationEngine.jquery.css"));
+
+            bundles.Add(new StyleBundle("~/Content/fontawesome").Include(
+                      "~/Content/font-awesome.css"));
         }
     }
 }

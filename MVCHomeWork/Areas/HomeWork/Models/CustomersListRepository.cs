@@ -19,6 +19,22 @@ namespace MVCHomeWork.Areas.HomeWork.Models
             }
             return data.AsQueryable();
         }
+
+        public override byte[] ExportXLS(IQueryable<CustomersList> entities, params string[] notExportCol)
+        {
+            var notCol = notExportCol.ToList();
+            notCol.Add("Id");
+            notCol.Add("CompanyNo");
+            return base.ExportXLS(entities, notCol.ToArray());
+        }
+
+        public override byte[] ExportXLSX(IQueryable<CustomersList> entities, params string[] notExportCol)
+        {
+            var notCol = notExportCol.ToList();
+            notCol.Add("Id");
+            notCol.Add("CompanyNo");
+            return base.ExportXLSX(entities, notCol.ToArray());
+        }
     }
 
 	public  interface ICustomersListRepository : IRepository<CustomersList>

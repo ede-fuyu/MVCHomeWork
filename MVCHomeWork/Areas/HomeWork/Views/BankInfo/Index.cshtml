@@ -5,6 +5,11 @@
 </div>
 
 <script type="text/javascript">
+    function ExportExcel(url) {
+        $("#formQuery").attr("action", url);
+        $("#formQuery").submit();
+    }
+
     function loadDataList(model) {
         BlockUIWindow("...客戶銀行帳戶資料清單載入中...");
         $("#BankListView").empty().load("@Url.Action("QueryList", "BankInfo")", { model: model }, function () {

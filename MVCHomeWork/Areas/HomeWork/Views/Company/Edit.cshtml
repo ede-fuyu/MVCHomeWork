@@ -32,8 +32,11 @@
                                 @Html.TextBoxFor(p => p.CompanyNo)
                             </li>
                             <li class="li-medium">
+                                <div style="visibility: hidden; height: 0;width:0;margin-left:145px">
+                                    @Html.TextBox("txtCompanyType")
+                                </div>
                                 @Html.LabelFor(p => p.CompanyType)
-                                @Html.DropDownListFor(p => p.CompanyType, (SelectList)ViewBag.Code, "請選擇", new { @class = "selectpicker" })
+                                @Html.DropDownListFor(p => p.CompanyType, (SelectList)ViewBag.Code, "請選擇", new { id= "ddlCompanyType", @class = "selectpicker" })
                             </li>
                             <li class="li-medium">
                                 @Html.LabelFor(p => p.Tel)
@@ -160,7 +163,15 @@
                     </text>}
                 }
             });
-            @if (Model.CompanyId != 0)
+
+            @if (ViewBag.isEdit)
+            {<text>
+            $("#txtCompanyType").attr('data-rule-ddlRequired', "必需選擇客戶分類");
+            $.validator.addMethod("ddlRequired", function (value, element) {
+                return $("#ddlCompanyType").val() != '';
+            }, function (msg) { return msg });
+            </text>}
+            else
             {<text>
             $(".Phone").attr('data-rule-phoneTest', "手機格式輸入錯誤");
             $.validator.addMethod("phoneTest", function (value, element) {

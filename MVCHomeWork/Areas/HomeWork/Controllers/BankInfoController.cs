@@ -22,6 +22,15 @@ namespace MVCHomeWork.Areas.HomeWork.Controllers
             return PartialView(BankRepo.Query(model));
         }
 
+        public ActionResult ExportXLSList(QueryBankModel model)
+        {
+            return File(BankRepo.ExportXLS(BankRepo.Query(model)), "application/vnd.ms-excel", "客戶銀行資料.xls");
+        }
+        public ActionResult ExportXLSXList(QueryBankModel model)
+        {
+            return File(BankRepo.ExportXLSX(BankRepo.Query(model)), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "客戶銀行資料.xlsx");
+        }
+
         public ActionResult QueryBankList (int id)
         {
             return PartialView(BankRepo.Query(id));

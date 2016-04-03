@@ -23,6 +23,15 @@ namespace MVCHomeWork.Areas.HomeWork.Controllers
             return PartialView(ContactRepo.Query(model));
         }
 
+        public ActionResult ExportXLSList(QueryContactModel model)
+        {
+            return File(ContactRepo.ExportXLS(ContactRepo.Query(model)), "application/vnd.ms-excel", "客戶聯絡人資料.xls");
+        }
+        public ActionResult ExportXLSXList(QueryContactModel model)
+        {
+            return File(ContactRepo.ExportXLSX(ContactRepo.Query(model)), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "客戶聯絡人資料.xlsx");
+        }
+
         public ActionResult QueryContactList(int id)
         {
             ViewBag.isEdit = true;

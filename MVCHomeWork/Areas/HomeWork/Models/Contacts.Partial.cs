@@ -27,7 +27,7 @@ namespace MVCHomeWork.Areas.HomeWork.Models
         public int Id { get; set; }
 
         [Required]
-        [Display(Name = "客戶名稱")]
+        [Display(Name = "客戶名稱", Description = "FK.Company.CompanyName")]
         public int CompanyId { get; set; }
         
         [StringLength(50, ErrorMessage= "職稱欄位長度不得大於 50 個字元")]

@@ -5,6 +5,15 @@
         <div class="panel-heading">
             <h4>客戶銀行帳戶資料查詢</h4>
             <div class="pull-right" style="margin-top: -37px;">
+                <div class="btn-group">
+                    <a class="btn btn-info dropdown-toggle" data-toggle="dropdown" href="#">
+                        匯出EXCEL <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul role="menu" class="dropdown-menu">
+                        <li><a onclick="ExportExcel('@Url.Action("ExportXLSList", "BankInfo")')" href="#">匯出XLS</a></li>
+                        <li><a onclick="ExportExcel('@Url.Action("ExportXLSXList", "BankInfo")')" href="#">匯出XLSX</a></li>
+                    </ul>
+                </div>
                 <button id="btnSearch" type="button" class="btn btn-success" onclick="loadDataList($('#formQuery').MVCModelSerialize());">查詢</button>
                 <button id="btnCreateClient" type="button" class="btn btn-primary" onclick="loadEditBankInfo(0, 0, '@Url.Action("Edit", "BankInfo")');">新增</button>
             </div>

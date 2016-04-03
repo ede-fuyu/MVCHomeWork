@@ -98,6 +98,22 @@ namespace MVCHomeWork.Areas.HomeWork.Models
             entity.IsDelete = true;
             this.Update(entity);
         }
+
+        public override byte[] ExportXLS(IQueryable<Contacts> entities, params string[] notExportCol)
+        {
+            var notCol = notExportCol.ToList();
+            notCol.Add("Id");
+            notCol.Add("IsDelete");
+            return base.ExportXLS(entities, notCol.ToArray());
+        }
+
+        public override byte[] ExportXLSX(IQueryable<Contacts> entities, params string[] notExportCol)
+        {
+            var notCol = notExportCol.ToList();
+            notCol.Add("Id");
+            notCol.Add("IsDelete");
+            return base.ExportXLSX(entities, notCol.ToArray());
+        }
     }
 
 	public  interface IContactsRepository : IRepository<Contacts>

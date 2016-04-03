@@ -5,6 +5,11 @@
 </div>
 
 <script type="text/javascript">
+    function ExportExcel(url) {
+        $("#formQuery").attr("action", url);
+        $("#formQuery").submit();
+    }
+
     function loadDataList(model) {
         BlockUIWindow("...客戶聯絡人清單載入中...");
         $("#ContactListView").empty().load("@Url.Action("QueryList", "Contact")", { model: model }, function () {

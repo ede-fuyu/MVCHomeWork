@@ -12,7 +12,7 @@
         });
     }
 
-    function ExportXLS(model) {
+    function ExportXLS() {
         @if(Model == 0)
         {<text>
         var url = "@Url.Action("ExportXLSDataList", "Company")";
@@ -20,6 +20,19 @@
         else
         {<text>
         var url = "@Url.Action("ExportXLSList", "Company")";
+        </text>}
+        $("#formQuery").attr("action", url);
+        $("#formQuery").submit();
+    }
+
+    function ExportXLSX() {
+        @if(Model == 0)
+        {<text>
+        var url = "@Url.Action("ExportXLSXDataList", "Company")";
+        </text>}
+        else
+        {<text>
+        var url = "@Url.Action("ExportXLSXList", "Company")";
         </text>}
         $("#formQuery").attr("action", url);
         $("#formQuery").submit();
