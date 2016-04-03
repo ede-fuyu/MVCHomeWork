@@ -12,14 +12,7 @@ using System.Reflection;
 
 namespace MVCHomeWork.Areas.HomeWork.Models
 {
-    public interface IExcelRepository<T>
-    {
-        byte[] ExportXLS(IQueryable<T> entities, params string[] notExportCol);
-
-        byte[] ExportXLSX(IQueryable<T> entities, params string[] notExportCol);
-    }
-
-    public class ExcelRepository<T> : IExcelRepository<T> 
+    public class ExcelRepository<T> 
     {
         public virtual byte[] ExportXLS(IQueryable<T> entities, params string[] notExportCol)
         {
