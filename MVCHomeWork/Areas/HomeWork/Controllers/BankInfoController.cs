@@ -26,6 +26,7 @@ namespace MVCHomeWork.Areas.HomeWork.Controllers
         {
             return File(BankRepo.ExportXLS(BankRepo.Query(model)), "application/vnd.ms-excel", "客戶銀行資料.xls");
         }
+
         public ActionResult ExportXLSXList(QueryBankModel model)
         {
             return File(BankRepo.ExportXLSX(BankRepo.Query(model)), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "客戶銀行資料.xlsx");
@@ -36,34 +37,22 @@ namespace MVCHomeWork.Areas.HomeWork.Controllers
             return PartialView(BankRepo.Query(id));
         }
 
-        public ActionResult Edit(int id, int dataid)
+        public ActionResult Edit(int companyid, int bankid)
         {
             ViewBag.isEdit = true;
-            return loadData(id, dataid);
+            ViewBag.Client =  CompanyRepo.SetClient(companyid);
+            return PartialView("Edit", BankRepo.Find(companyid, bankid));
         }
 
-        public ActionResult Detail(int id, int dataid)
+        public ActionResult Detail(int companyid, int bankid)
         {
             ViewBag.isEdit = false;
-            if (dataid == 0)
+            if (bankid == 0)
             {
                 return PartialView("Edit", null);
             }
-            return loadData(id, dataid);
-        }
-
-        public ActionResult loadData(int id, int dataid)
-        {
-            if (id == 0)
-            {
-                ViewBag.Client = new SelectList(CompanyRepo.All().Select(p => new { value = p.CompanyId, text = p.CompanyName }), "value", "text");
-            }
-            else
-            {
-                var company = CompanyRepo.Find(id);
-                ViewBag.Client = company == null ? "" : company.CompanyName;
-            }
-            return PartialView("Edit", BankRepo.Find(id, dataid));
+            ViewBag.Client = CompanyRepo.SetClient(companyid);
+            return PartialView("Edit", BankRepo.Find(companyid, bankid));
         }
 
         public ActionResult Save(BankInfo model)
@@ -73,18 +62,9 @@ namespace MVCHomeWork.Areas.HomeWork.Controllers
             {
                 try
                 {
-                    if (model.Id == 0)
-                    {
-                        BankRepo.Add(model);
-                        msg = "客戶銀行資訊新增成功";
-                    }
-                    else
-                    {
-                        BankRepo.Update(model);
-                        msg = "客戶銀行資訊儲存成功";
-                    }
+                    BankRepo.Save(model);
                     BankRepo.UnitOfWork.Commit();
-                    return Json(new { id = model.Id, isValid = true, message = HttpUtility.HtmlEncode(msg) });
+                    return Json(new { id = model.Id, isValid = true, message = HttpUtility.HtmlEncode("客戶銀行資訊" + (model.Id == 0 ? "新增" : "更新") + "成功") });
                 }
                 catch (Exception ex)
                 {

@@ -87,18 +87,9 @@ namespace MVCHomeWork.Areas.HomeWork.Controllers
             {
                 try
                 {
-                    if (model.CompanyId == 0)
-                    {
-                        CompanyRepo.Add(model);
-                        msg = "客戶資料新增成功";
-                    }
-                    else
-                    {
-                        CompanyRepo.Update(model);
-                        msg = "客戶資料儲存成功";
-                    }
+                    CompanyRepo.Save(model);
                     CompanyRepo.UnitOfWork.Commit();
-                    return Json(new { id = model.CompanyId, isValid = true, message = HttpUtility.HtmlEncode(msg) });
+                    return Json(new { id = model.CompanyId, isValid = true, message = HttpUtility.HtmlEncode("客戶資料" + (model.CompanyId == 0 ? "新增" : "更新") + "成功") });
                 }
                 catch (Exception ex)
                 {

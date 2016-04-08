@@ -17,15 +17,15 @@
         });
     }
 
-    function loadEditContactPersonInfo(id, dataid, url) {
-        if (dataid === 0) {
+    function loadEditContactPersonInfo(companyid, contactid, url) {
+        if (contactid === 0) {
             BlockUIWindow("...新增客戶聯絡人資料頁面載入中...");
         } else if (url.indexOf("Detail")) {
             BlockUIWindow("...客戶聯絡人資料頁面載入中...");
         } else {
             BlockUIWindow("...編輯客戶聯絡人資料頁面載入中...");
         }
-        $("#ContactBody").empty().load(url, { id: id, dataid: dataid }, function () {
+        $("#ContactBody").empty().load(url, { companyid: companyid, contactid: contactid }, function () {
             $.unblockUI();
         });
     }

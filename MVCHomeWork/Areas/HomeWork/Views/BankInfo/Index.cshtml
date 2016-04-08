@@ -17,15 +17,15 @@
         });
     }
 
-    function loadEditBankInfo(id, dataid, url) {
-        if (dataid === 0) {
+    function loadEditBankInfo(companyid, bankid, url) {
+        if (bankid === 0) {
             BlockUIWindow("...新增客戶銀行帳戶資料頁面載入中...");
         } else if (url.indexOf("Detail")) {
             BlockUIWindow("...客戶銀行帳戶資料頁面載入中...");
         } else {
             BlockUIWindow("...編輯客戶銀行帳戶資料頁面載入中...");
         }
-        $("#BankBody").empty().load(url, { id: id, dataid: dataid }, function () {
+        $("#BankBody").empty().load(url, { companyid: companyid, bankid: bankid }, function () {
             $.unblockUI();
         });
     }

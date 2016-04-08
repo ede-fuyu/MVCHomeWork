@@ -1,7 +1,9 @@
 using System;
 using System.Linq;
+using System.Linq.Dynamic;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Web.Mvc;
 
 namespace MVCHomeWork.Areas.HomeWork.Models
 {   
@@ -50,16 +52,23 @@ namespace MVCHomeWork.Areas.HomeWork.Models
             }
         }
 
-        public void Update(Company entity)
+        public void Save(Company entity)
         {
-            var context = (CustomerEntities)this.UnitOfWork.Context;
-            context.Entry(entity).State = EntityState.Modified;
+            if (entity.CompanyId == 0)
+            {
+                this.Add(entity);
+            }
+            else
+            {
+                var context = (CustomerEntities)this.UnitOfWork.Context;
+                context.Entry(entity).State = EntityState.Modified;
+            }
         }
 
         public override void Delete(Company entity)
         {
             entity.IsDelete = true;
-            this.Update(entity);
+            this.Save(entity);
         }
 
         public override byte[] ExportXLS(IQueryable<Company> entities, params string[] notExportCol)
@@ -76,6 +85,19 @@ namespace MVCHomeWork.Areas.HomeWork.Models
             notCol.Add("CompanyId");
             notCol.Add("IsDelete");
             return base.ExportXLSX(entities, notCol.ToArray());
+        }
+
+        internal dynamic SetClient(int companyid)
+        {
+            if (companyid == 0)
+            {
+                return new SelectList(this.All().Select(p => new { value = p.CompanyId, text = p.CompanyName }), "value", "text");
+            }
+            else
+            {
+                var company = this.Find(companyid);
+                return company == null ? "" : company.CompanyName;
+            }
         }
     }
 

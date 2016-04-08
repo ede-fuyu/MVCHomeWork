@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Linq.Dynamic;
 using System.Collections.Generic;
 using System.Data.Entity;
 
@@ -72,10 +73,17 @@ namespace MVCHomeWork.Areas.HomeWork.Models
             }
         }
 
-        public void Update(Contacts entity)
+        public void Save(Contacts entity)
         {
-            var context = (CustomerEntities)this.UnitOfWork.Context;
-            context.Entry(entity).State = EntityState.Modified;
+            if (entity.Id == 0)
+            {
+                this.Add(entity);
+            }
+            else
+            {
+                var context = (CustomerEntities)this.UnitOfWork.Context;
+                context.Entry(entity).State = EntityState.Modified;
+            }
         }
 
         public void BatchUpdate(List<BatchContacts> model)
@@ -88,7 +96,7 @@ namespace MVCHomeWork.Areas.HomeWork.Models
                     entity.JobTitle = data.JobTitle;
                     entity.Phone = data.Phone;
                     entity.Tel = data.Tel;
-                    this.Update(entity);
+                    this.Save(entity);
                 }
             }
         }
@@ -96,7 +104,7 @@ namespace MVCHomeWork.Areas.HomeWork.Models
         public override void Delete(Contacts entity)
         {
             entity.IsDelete = true;
-            this.Update(entity);
+            this.Save(entity);
         }
 
         public override byte[] ExportXLS(IQueryable<Contacts> entities, params string[] notExportCol)

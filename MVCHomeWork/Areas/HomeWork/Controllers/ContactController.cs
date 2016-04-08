@@ -38,34 +38,22 @@ namespace MVCHomeWork.Areas.HomeWork.Controllers
             return PartialView("QueryList", ContactRepo.Query(id));
         }
 
-        public ActionResult Edit(int id, int dataid)
+        public ActionResult Edit(int companyid, int contactid)
         {
             ViewBag.isEdit = true;
-            return loadData(id, dataid);
+            ViewBag.Client = CompanyRepo.SetClient(companyid);
+            return PartialView("Edit", ContactRepo.Find(companyid, contactid));
         }
 
-        public ActionResult Detail(int id, int dataid)
+        public ActionResult Detail(int companyid, int contactid)
         {
             ViewBag.isEdit = false;
-            if (id == 0)
+            if (companyid == 0)
             {
                 return PartialView("編輯頁", null);
             }
-            return loadData(id, dataid);
-        }
-
-        public ActionResult loadData(int id, int dataid)
-        {
-            if (id == 0)
-            {
-                ViewBag.Client = new SelectList(CompanyRepo.All().Select(p => new { value = p.CompanyId, text = p.CompanyName }), "value", "text");
-            }
-            else
-            {
-                var company = CompanyRepo.Find(id);
-                ViewBag.Client = company == null ? "" : company.CompanyName;
-            }
-            return PartialView("Edit", ContactRepo.Find(id, dataid));
+            ViewBag.Client = CompanyRepo.SetClient(companyid);
+            return PartialView("Edit", ContactRepo.Find(companyid, contactid));
         }
 
         public ActionResult Save(Contacts model)
@@ -75,18 +63,9 @@ namespace MVCHomeWork.Areas.HomeWork.Controllers
             {
                 try
                 {
-                    if (model.Id == 0)
-                    {
-                        ContactRepo.Add(model);
-                        msg = "客戶聯絡人新增成功";
-                    }
-                    else
-                    {
-                        ContactRepo.Update(model);
-                        msg = "客戶聯絡人儲存成功";
-                    }
+                    ContactRepo.Save(model);
                     ContactRepo.UnitOfWork.Commit();
-                    return Json(new { id = model.Id, isValid = true, message = HttpUtility.HtmlEncode(msg) });
+                    return Json(new { id = model.Id, isValid = true, message = HttpUtility.HtmlEncode("客戶聯絡人" + (model.Id == 0 ? "新增" : "更新") + "成功") });
                 }
                 catch (Exception ex)
                 {

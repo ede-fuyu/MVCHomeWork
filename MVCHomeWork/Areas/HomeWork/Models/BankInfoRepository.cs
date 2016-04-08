@@ -1,7 +1,9 @@
 using System;
 using System.Linq;
+using System.Linq.Dynamic;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Web.Mvc;
 
 namespace MVCHomeWork.Areas.HomeWork.Models
 {   
@@ -79,16 +81,24 @@ namespace MVCHomeWork.Areas.HomeWork.Models
             }
         }
 
-        public void Update(BankInfo entity)
+        public void Save(BankInfo entity)
         {
-            var context = (CustomerEntities)this.UnitOfWork.Context;
-            context.Entry(entity).State = EntityState.Modified;
+
+            if (entity.Id == 0)
+            {
+                this.Add(entity);
+            }
+            else
+            {
+                var context = (CustomerEntities)this.UnitOfWork.Context;
+                context.Entry(entity).State = EntityState.Modified;
+            }
         }
 
         public override void Delete(BankInfo entity)
         {
             entity.IsDelete = true;
-            this.Update(entity);
+            this.Save(entity);
         }
 
         public override byte[] ExportXLS(IQueryable<BankInfo> entities, params string[] notExportCol)
