@@ -50,7 +50,7 @@ namespace MVCHomeWork.Areas.HomeWork.Controllers
             ViewBag.isEdit = false;
             if (companyid == 0)
             {
-                return PartialView("編輯頁", null);
+                return PartialView("Edit", null);
             }
             ViewBag.Client = CompanyRepo.SetClient(companyid);
             return PartialView("Edit", ContactRepo.Find(companyid, contactid));
