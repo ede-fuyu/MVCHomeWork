@@ -16,8 +16,7 @@ namespace MVCHomeWork.Areas.HomeWork.Controllers
             return View(0);
         }
 
-        // GET: HomeWork/Company/List
-
+        // GET: HomeWork/Company/List        
         public ActionResult List()
         {
             return View("Index", 1);
@@ -37,6 +36,7 @@ namespace MVCHomeWork.Areas.HomeWork.Controllers
         {
             return File(CompanyRepo.ExportXLS(CompanyRepo.Query(model)), "application/vnd.ms-excel", "客戶資料.xls");
         }
+
         public ActionResult ExportXLSXDataList(QueryCompanyModel model)
         {
             return File(CompanyRepo.ExportXLSX(CompanyRepo.Query(model)), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "客戶資料.xlsx");
@@ -51,6 +51,7 @@ namespace MVCHomeWork.Areas.HomeWork.Controllers
         {
             return File(ListRepo.ExportXLS(ListRepo.Query(model)), "application/vnd.ms-excel", "客戶清單資料.xls");
         }
+
         public ActionResult ExportXLSXList(QueryCompanyModel model)
         {
             return File(ListRepo.ExportXLSX(ListRepo.Query(model)), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "客戶清單資料.xlsx");
