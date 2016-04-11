@@ -37,6 +37,16 @@ namespace MVCHomeWork.Areas.HomeWork.Models
             {
                 data = data.Where(p => p.CompanyName.Contains(model.CompanyName));
             }
+
+            if (!string.IsNullOrEmpty(model.sort))
+            {
+                data = data.OrderBy(model.sort + " " + model.sidx);
+            }
+            else
+            {
+                data = data.OrderBy(p => p.CompanyId);
+            }
+
             return data.AsQueryable();
         }
 

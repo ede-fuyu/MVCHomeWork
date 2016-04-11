@@ -29,7 +29,14 @@ namespace MVCHomeWork.Areas.HomeWork.Controllers
 
         public ActionResult QueryDataList(QueryCompanyModel model)
         {
-            return PartialView(CompanyRepo.Query(model));
+            if (string.IsNullOrEmpty(model.sort))
+            {
+                return PartialView(CompanyRepo.Query(model));
+            }
+            else
+            {
+                return PartialView("PartialDataList", CompanyRepo.Query(model));
+            }
         }
 
         public ActionResult ExportXLSDataList(QueryCompanyModel model)

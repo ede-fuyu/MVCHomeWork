@@ -1,0 +1,60 @@
+﻿@model IEnumerable<MVCHomeWork.Areas.HomeWork.Models.Contacts>
+@{ 
+    var data = Model.ToList();
+}
+
+@for (int i = 0; i < data.Count(); i++)
+{
+    if (!ViewBag.isEdit)
+    {
+        <tr>
+            <td style="width: 140px;">
+                @Html.DisplayFor(m => data[i].JobTitle)
+            </td>
+            <td style="width: 100px;">
+                @Html.DisplayFor(m => data[i].Name)
+            </td>
+            <td  style="width: 160px;">
+                @Html.DisplayFor(m => data[i].Email)
+            </td>
+            <td  style="width: 100px;">
+                @Html.DisplayFor(m => data[i].Phone)
+            </td>
+            <td  style="width: 100px;">
+                @Html.DisplayFor(m => data[i].Tel)
+            </td>
+            <td  style="width: 120px;">
+                @Html.DisplayFor(m => data[i].Company.CompanyName)
+            </td>
+            <td  style="width: 100px;">
+                <button type="button" class="btn btn-xs btn-info" onclick="loadEditContactPersonInfo('@data[i].CompanyId', '@data[i].Id', '@Url.Action("Edit", "Contact")')">編輯</button>
+                <button type="button" class="btn btn-xs btn-warning" onclick="loadEditContactPersonInfo('@data[i].CompanyId','@data[i].Id', '@Url.Action("Detail", "Contact")')">檢視</button>
+                <button type="button" class="btn btn-xs btn-danger" onclick="delContactPerson('@data[i].Id', '@data[i].Name')">刪除</button>
+            </td>
+        </tr>
+    }
+    else
+    {
+        <tr class="ContactData">
+            <td  style="width: 140px;">
+                @Html.HiddenFor(m => data[i].Id)
+                @Html.TextBoxFor(m => data[i].JobTitle, new { @class = "input-medium" })
+            </td>
+            <td  style="width: 100px;">
+                @Html.DisplayFor(m => data[i].Name)
+            </td>
+            <td  style="width: 160px;">
+                @Html.DisplayFor(m => data[i].Email)
+            </td>
+            <td  style="width: 100px;">
+                @Html.TextBoxFor(m => data[i].Phone, new { @class = "input-medium Phone" })
+            </td>
+            <td  style="width: 120px;">
+                @Html.TextBoxFor(m => data[i].Tel, new { @class = "input -medium" })
+            </td>
+            <td  style="width: 100px;">
+                @Html.DisplayFor(m => data[i].Company.CompanyName)
+            </td>
+        </tr>
+    }
+}

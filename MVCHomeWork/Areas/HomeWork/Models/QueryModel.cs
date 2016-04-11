@@ -6,8 +6,14 @@ using System.Web;
 
 namespace MVCHomeWork.Areas.HomeWork.Models
 {
-	public class QueryCompanyModel
-	{
+    public class GridModel
+    {
+        public string sort { get; set; }
+        public string sidx { get; set; }
+    }
+
+    public class QueryCompanyModel : GridModel
+    {
         [Display(Name = "客戶名稱")]
         public string CompanyName { get; set; }
 
@@ -35,5 +41,7 @@ namespace MVCHomeWork.Areas.HomeWork.Models
     {
         [Display(Name = "聯絡人姓名")]
         public string ContactName { get; set; }
+
+        public string selectJob { get; set; }
     }
 }

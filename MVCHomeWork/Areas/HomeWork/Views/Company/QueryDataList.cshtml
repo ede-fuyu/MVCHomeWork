@@ -2,57 +2,55 @@
 
 @if (Model.Count() > 0)
 {
-    <table class="table">
+    <table class="table" id="taDataHead">
         <tr>
-            <th style="width: 150px;">
+            <th style="width: 150px; cursor: pointer;" onclick="Sequence('CompanyName');" >
                 @Html.DisplayNameFor(p => p.CompanyName)
             </th>
-            <th style="width: 60px;">
+            <th style="width: 60px; cursor: pointer;" onclick="Sequence('CompanyNo');">
                 @Html.DisplayNameFor(p => p.CompanyNo)
             </th>
-            <th style="width: 80px;">
+            <th style="width: 80px; cursor: pointer;" onclick="Sequence('Tel');">
                 @Html.DisplayNameFor(p => p.Tel)
             </th>
-            <th style="width: 80px;">
+            <th style="width: 80px; cursor: pointer;" onclick="Sequence('Fax');">
                 @Html.DisplayNameFor(p => p.Fax)
             </th>
-            <th style="width: 150px;">
+            <th style="width: 150px; cursor: pointer;" onclick="Sequence('Address');">
                 @Html.DisplayNameFor(p => p.Address)
             </th>
-            <th style="width: 100px;">
+            <th style="width: 100px; cursor: pointer;" onclick="Sequence('Email');">
                 @Html.DisplayNameFor(p => p.Email)
             </th>
             <th style="width: 120px;">功能</th>
         </tr>
-        @foreach (var p in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(m => p.CompanyName)
-                </td>
-                <td>
-                    @Html.DisplayFor(m => p.CompanyNo)
-                </td>
-                <td>
-                    @Html.DisplayFor(m => p.Tel)
-                </td>
-                <td>
-                    @Html.DisplayFor(m => p.Fax)
-                </td>
-                <td>
-                    @Html.DisplayFor(m => p.Address)
-                </td>
-                <td>
-                    @Html.DisplayFor(m => p.Email)
-                </td>
-                <td>
-                    <button type="button" class="btn btn-xs btn-info" onclick="loadEdit('@p.CompanyId', '@Url.Action("Edit", "Company")')">編輯</button>
-                    <button type="button" class="btn btn-xs btn-warning" onclick="loadEdit('@p.CompanyId', '@Url.Action("Detail", "Company")')">檢視</button>
-                    <button type="button" class="btn btn-xs btn-danger" onclick="delCompanyData('@p.CompanyId', '@p.CompanyName')">刪除</button>
-                </td>
-            </tr>
-        }
     </table>
+    <table id="taCompanyDataList" class="table">@Html.Partial("PartialDataList", Model)</table>
+
+    <script type="text/javascript">
+        function Sequence(sort) {
+            setSequence("#taDataHead", sort);
+            var model = $('#formQuery').MVCModelSerialize();
+            model["sort"] = $("#taDataHead").attr("data-sort");
+            model["sidx"] = $("#taDataHead").attr("data-sidx");
+            $("#taCompanyDataList").empty().load("@Url.Action("QueryDataList")", { model: model });
+        }
+
+        function setSequence(table, sort) {
+            if ($(table).attr("data-sort") != sort) {
+                $(table).attr("data-sort", sort);
+                $(table).attr("data-sidx", "asc")
+            } else {
+                if ($(table).attr("data-sort") == sort) {
+                    if ($(table).attr("data-sidx") == "asc") {
+                        $(table).attr("data-sidx", "desc")
+                    } else {
+                        $(table).attr("data-sidx", "asc")
+                    }
+                }
+            }
+        }
+    </script>
 }
 else
 {

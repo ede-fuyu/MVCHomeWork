@@ -1,0 +1,30 @@
+﻿@model IEnumerable<MVCHomeWork.Areas.HomeWork.Models.Company>
+
+@foreach (var p in Model)
+{
+    <tr>
+        <td style="width: 150px;">
+            @Html.DisplayFor(m => p.CompanyName)
+        </td>
+        <td style="width: 60px;">
+            @Html.DisplayFor(m => p.CompanyNo)
+        </td>
+        <td style="width: 80px;">
+            @Html.DisplayFor(m => p.Tel)
+        </td>
+        <td style="width: 80px;">
+            @Html.DisplayFor(m => p.Fax)
+        </td>
+        <td style="width: 150px;">
+            @Html.DisplayFor(m => p.Address)
+        </td>
+        <td style="width: 100px;">
+            @Html.DisplayFor(m => p.Email)
+        </td>
+        <td style="width: 120px;">
+            <button type="button" class="btn btn-xs btn-info" onclick="loadEdit('@p.CompanyId', '@Url.Action("Edit", "Company")')">編輯</button>
+            <button type="button" class="btn btn-xs btn-warning" onclick="loadEdit('@p.CompanyId', '@Url.Action("Detail", "Company")')">檢視</button>
+            <button type="button" class="btn btn-xs btn-danger" onclick="delCompanyData('@p.CompanyId', '@p.CompanyName')">刪除</button>
+        </td>
+    </tr>
+}

@@ -20,10 +20,18 @@ namespace MVCHomeWork.Areas.HomeWork.Controllers
         public ActionResult QueryList(QueryContactModel model)
         {
             ViewBag.isEdit = false;
-            return PartialView(ContactRepo.Query(model));
+            if (string.IsNullOrEmpty(model.sort))
+            {
+                ViewBag.jobTitleList = new SelectList(ContactRepo.All().Select(p => new { value = p.JobTitle, text = p.JobTitle }).ToList(), "value", "text");
+                return PartialView(ContactRepo.Query(model));
+            }
+            else
+            {
+                return PartialView("PartialList", ContactRepo.Query(model));
+            }
         }
 
-        public ActionResult ExportXLSList(QueryContactModel model)
+        public ActionResult ExportXLSList(QueryContactModel model, int page)
         {
             return File(ContactRepo.ExportXLS(ContactRepo.Query(model)), "application/vnd.ms-excel", "客戶聯絡人資料.xls");
         }
@@ -33,10 +41,18 @@ namespace MVCHomeWork.Areas.HomeWork.Controllers
             return File(ContactRepo.ExportXLSX(ContactRepo.Query(model)), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "客戶聯絡人資料.xlsx");
         }
 
-        public ActionResult QueryContactList(int id)
+        public ActionResult QueryContactList(int id, GridModel param)
         {
             ViewBag.isEdit = true;
-            return PartialView("QueryList", ContactRepo.Query(id));
+            if (string.IsNullOrEmpty(param.sort))
+            {
+                ViewBag.jobTitleList = new SelectList(ContactRepo.All().Select(p => new { value = p.JobTitle, text = p.JobTitle }).ToList(), "value", "text");
+                return PartialView("QueryList", ContactRepo.Query(id, param));
+            }
+            else
+            {
+                return PartialView("PartialList", ContactRepo.Query(id, param));
+            }
         }
 
         public ActionResult Edit(int companyid, int contactid)

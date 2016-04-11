@@ -3,6 +3,8 @@ using System.Linq;
 using System.Linq.Dynamic;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Collections;
+using System.Web.Mvc;
 
 namespace MVCHomeWork.Areas.HomeWork.Models
 {   
@@ -41,12 +43,32 @@ namespace MVCHomeWork.Areas.HomeWork.Models
             {
                 data = data.Where(p => p.Name.Contains(model.ContactName));
             }
+
+            if (!string.IsNullOrEmpty(model.selectJob))
+            {
+                data = data.Where(p => p.JobTitle == model.selectJob);
+            }
+
+            if (!string.IsNullOrEmpty(model.sort))
+            {
+                data = data.OrderBy(model.sort + " " + model.sidx);
+            }
+            else
+            {
+                data = data.OrderBy(p => p.Id);
+            }
+
             return data.AsQueryable();
         }
 
-        public IQueryable<Contacts> Query(int id)
+        public IQueryable<Contacts> Query(int id, GridModel param)
         {
-            return this.All().Where(p => p.CompanyId == id).AsQueryable();
+            var data = this.All().Where(p => p.CompanyId == id);
+            if (!string.IsNullOrEmpty(param.sort))
+            {
+                data = data.OrderBy(param.sort + " " + param.sidx);
+            }
+            return data.AsQueryable();
         }
 
         public Contacts Find(int id)

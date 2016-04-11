@@ -2,89 +2,83 @@
 
 @if (Model.Count() > 0)
 {
-    var data = Model.ToList();
-    <table class="table">
+    <table class="table" id="taDataHead">
         <tr>
-            <th>
+            <th style="width: 80px; cursor: pointer;" onclick="Sequence('JobTitle');">
                 @Html.DisplayNameFor(p => p.JobTitle)
             </th>
-            <th>
+            <th style="width: 60px;">
+                @Html.DropDownList("ddlJobTitle", (SelectList)ViewBag.jobTitleList, "全部")
+            </th>
+            <th style="width: 100px; cursor: pointer;" onclick="Sequence('Name');">
                 @Html.DisplayNameFor(p => p.Name)
             </th>
-            <th>
+            <th style="width: 160px; cursor: pointer;" onclick="Sequence('Email');">
                 @Html.DisplayNameFor(p => p.Email)
             </th>
-            <th>
+            <th style="width: 100px; cursor: pointer;" onclick="Sequence('Phone');">
                 @Html.DisplayNameFor(p => p.Phone)
             </th>
-            <th>
+            <th style="width: 100px; cursor: pointer;" onclick="Sequence('Tel');">
                 @Html.DisplayNameFor(p => p.Tel)
             </th>
-            <th>
+            <th style="width: 120px;">
                 @Html.DisplayNameFor(p => p.Company.CompanyName)
             </th>
             @if (!ViewBag.isEdit)
             {
-                <th></th>
+                <th style="width: 100px;"></th>
             }
         </tr>
+    </table>
+    <table id="taContactDataList" class="table">@Html.Partial("PartialList", Model)</table>
 
-        @for (int i = 0; i < data.Count(); i++)
-        {
-            if (!ViewBag.isEdit)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(m => data[i].JobTitle)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(m => data[i].Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(m => data[i].Email)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(m => data[i].Phone)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(m => data[i].Tel)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(m => data[i].Company.CompanyName)
-                    </td>
-                    <td>
-                        <button type="button" class="btn btn-xs btn-info" onclick="loadEditContactPersonInfo('@data[i].CompanyId', '@data[i].Id', '@Url.Action("Edit", "Contact")')">編輯</button>
-                        <button type="button" class="btn btn-xs btn-warning" onclick="loadEditContactPersonInfo('@data[i].CompanyId','@data[i].Id', '@Url.Action("Detail", "Contact")')">檢視</button>
-                        <button type="button" class="btn btn-xs btn-danger" onclick="delContactPerson('@data[i].Id', '@data[i].Name')">刪除</button>
-                    </td>
-                </tr>
-            }
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#ddlJobTitle").change(function () {
+                if ($("#taDataHead").attr("data-sidx") === undefined) {
+                    $("#taDataHead").attr("data-sort", "Id");
+                    $("#taDataHead").attr("data-sidx", "asc");
+                }
+                Sequence();
+            });
+        })
+
+        function Sequence(sort) {
+            var model = {};
+            setSequence("#taDataHead", sort);
+            var model = $('#formQuery').MVCModelSerialize();
+            model["sort"] = $("#taDataHead").attr("data-sort");
+            model["sidx"] = $("#taDataHead").attr("data-sidx");
+            model["selectJob"] = $("#ddlJobTitle").val();
+            @if (!ViewBag.isEdit)
+            {<text>
+            var url = "@Url.Action("QueryList")";
+            </text>}
             else
-            {
-                <tr class="ContactData">
-                    <td>
-                        @Html.HiddenFor(m => data[i].Id)
-                        @Html.TextBoxFor(m => data[i].JobTitle, new { @class = "input-medium" })
-                    </td>
-                    <td>
-                        @Html.DisplayFor(m => data[i].Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(m => data[i].Email)
-                    </td>
-                    <td>
-                        @Html.TextBoxFor(m => data[i].Phone, new { @class = "input-medium Phone" })
-                    </td>
-                    <td>
-                        @Html.TextBoxFor(m => data[i].Tel, new { @class = "input -medium" })
-                    </td>
-                    <td>
-                        @Html.DisplayFor(m => data[i].Company.CompanyName)
-                    </td>
-                </tr>
+            {<text>
+            var url = "@Url.Action("QueryContactList")";
+            </text>}
+            $("#taContactDataList").load(url, { model: model });
+        }
+
+        function setSequence(table, sort) {
+            if (sort !== undefined) {
+                if ($(table).attr("data-sort") != sort) {
+                    $(table).attr("data-sort", sort);
+                    $(table).attr("data-sidx", "asc")
+                } else {
+                    if ($(table).attr("data-sort") == sort) {
+                        if ($(table).attr("data-sidx") == "asc") {
+                            $(table).attr("data-sidx", "desc")
+                        } else {
+                            $(table).attr("data-sidx", "asc")
+                        }
+                    }
+                }
             }
         }
-    </table>
+    </script>
 }
 else
 {
