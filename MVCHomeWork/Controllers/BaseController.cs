@@ -1,4 +1,5 @@
 ﻿using MVCHomeWork.Areas.HomeWork.Models;
+using MVCHomeWork.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +8,7 @@ using System.Web.Mvc;
 
 namespace MVCHomeWork.Controllers
 {
+    [TimeLogToDebug]
     public class BaseController : Controller
     {
         protected CustomersListRepository ListRepo = RepositoryHelper.GetCustomersListRepository();

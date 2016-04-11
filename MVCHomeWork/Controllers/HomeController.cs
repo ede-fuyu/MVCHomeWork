@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MVCHomeWork.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -6,6 +7,7 @@ using System.Web.Mvc;
 
 namespace MVCHomeWork.Controllers
 {
+    [TimeLogToDebug]
     public class HomeController : Controller
     {
         public ActionResult Index()
@@ -26,5 +28,19 @@ namespace MVCHomeWork.Controllers
 
             return View();
         }
+
+        [HandleError(ExceptionType = typeof(InvalidOperationException), View = "Error2")]
+        public ActionResult error1(string type)
+        {
+            if (string.IsNullOrEmpty(type))
+            {
+                throw new ArgumentException("參數錯誤");
+            }
+            else
+            {
+                throw new InvalidOperationException("操作錯誤");
+            }
+        }
+
     }
 }
