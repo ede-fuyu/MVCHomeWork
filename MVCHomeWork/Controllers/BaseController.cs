@@ -9,6 +9,7 @@ using System.Web.Mvc;
 namespace MVCHomeWork.Controllers
 {
     [TimeLogToDebug]
+    [Authorize]
     public class BaseController : Controller
     {
         protected CustomersListRepository ListRepo = RepositoryHelper.GetCustomersListRepository();

@@ -8,6 +8,7 @@ using System.Web.Mvc;
 namespace MVCHomeWork.Controllers
 {
     [TimeLogToDebug]
+    [AllowAnonymous]
     public class HomeController : Controller
     {
         public ActionResult Index()

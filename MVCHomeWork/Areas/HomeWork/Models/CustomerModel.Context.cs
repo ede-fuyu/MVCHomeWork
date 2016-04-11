@@ -30,5 +30,6 @@ namespace MVCHomeWork.Areas.HomeWork.Models
         public virtual DbSet<BankInfo> BankInfo { get; set; }
         public virtual DbSet<Contacts> Contacts { get; set; }
         public virtual DbSet<CustomersList> CustomersList { get; set; }
+        public virtual DbSet<BaseUser> BaseUser { get; set; }
     }
 }

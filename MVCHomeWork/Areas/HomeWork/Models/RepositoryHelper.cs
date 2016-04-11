@@ -21,6 +21,20 @@ namespace MVCHomeWork.Areas.HomeWork.Models
 			return repository;
 		}		
 
+		public static BaseUserRepository GetBaseUserRepository()
+		{
+			var repository = new BaseUserRepository();
+			repository.UnitOfWork = GetUnitOfWork();
+			return repository;
+		}
+
+		public static BaseUserRepository GetBaseUserRepository(IUnitOfWork unitOfWork)
+		{
+			var repository = new BaseUserRepository();
+			repository.UnitOfWork = unitOfWork;
+			return repository;
+		}		
+
 		public static CompanyRepository GetCompanyRepository()
 		{
 			var repository = new CompanyRepository();
